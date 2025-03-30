@@ -4,7 +4,7 @@ import "./globals.css";
 import OCIDProvider from "../components/OCIDProvider";
 import Script from "next/script";
 import Banner from "@/components/banner/Banner";
-import { BannerProvider } from "@/components/BannerContext";
+import { BannerProvider } from "@/components/banner/BannerContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
