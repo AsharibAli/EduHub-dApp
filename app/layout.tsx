@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import OCIDProvider from "../components/OCIDProvider";
 import Script from "next/script";
-import Banner from "@/components/Banner";
+import Banner from "@/components/banner/Banner";
 import { BannerProvider } from "@/components/BannerContext";
 
 const inter = Inter({ subsets: ["latin"] });

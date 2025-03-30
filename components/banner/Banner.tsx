@@ -15,17 +15,17 @@ import { cn } from "@/lib/utils";
 import { useBanner } from "./BannerContext";
 
 const BANNER_CONFIG = {
-  title: "➡️ EduHub is Live on EDU Chain Mainnet 🔥",
+  title: "➡️ Eid Mubarak - 100k Yuzu Giveaway 🍊",
   description:
-    "Start interacting with EduHub today to earn $200 USDT, a share of $10,000 in EDU rewards, and most importantly, 15,682,492 Yuzy Points! 👀🍊",
+    "We're giving away 100k Yuzu to our community! Wishing you a wonderful day full of delicious food and amazing vibes.",
   buttons: {
     primary: {
-      text: "Start Earning",
-      href: "https://rewards.taskon.xyz/quest/306835034",
+      text: "Participate Here",
+      href: "https://x.com/eduhub__/status/1906367899301990565",
     },
     secondary: {
-      text: "Start Building",
-      href: "https://eduhub.dev/",
+      text: "Visit Docs",
+      href: "https://docs.eduhub.dev/",
     },
   },
 };
