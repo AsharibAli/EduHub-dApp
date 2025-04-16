@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "EduHub dApp 🔥",
   description:
-    "⚡EduHub is building community and developer tools for EduChain 🚀",
+    "⚡EduHub is building vibe community and developer tools for EduChain 🚀",
 };
 
 export default function RootLayout({
