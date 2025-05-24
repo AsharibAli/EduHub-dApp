@@ -1,4 +1,7 @@
 "use client";
+
+export const dynamic = "force-dynamic";
+
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import contractJson from "@/contracts/AssignmentSubmission.sol/AssignmentSubmission.json";
@@ -47,7 +50,7 @@ export default function Component() {
     useState<boolean>(false);
 
   useEffect(() => {
-    if (isConnected && authState.idToken) {
+    if (isConnected && authState?.idToken) {
       const decodedToken = jwtDecode<DecodedToken>(authState.idToken);
       setOcidUsername(decodedToken.edu_username);
       setIsEducator(decodedToken.edu_username.startsWith("asharib"));
@@ -55,7 +58,7 @@ export default function Component() {
       setOcidUsername(null);
       setIsEducator(false);
     }
-  }, [isConnected, authState.idToken]);
+  }, [isConnected, authState?.idToken]);
 
   const handleConnect = async (address: string) => {
     try {

@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import LoginButton from "../../components/LoginButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 interface DecodedToken {
   user_id: number;
@@ -26,7 +26,8 @@ interface DecodedToken {
   [key: string]: any;
 }
 
-const UserPage = () => {
+// Component that uses useSearchParams must be wrapped in Suspense
+function UserPageContent() {
   const { isInitialized, authState, ocAuth } = useOCAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -73,8 +74,13 @@ const UserPage = () => {
   } else {
     let userInfo: DecodedToken | null = null;
 
-    if (authState.idToken) {
-      userInfo = jwtDecode<DecodedToken>(authState.idToken);
+    // Only try to decode token on client side
+    if (typeof window !== "undefined" && authState.idToken) {
+      try {
+        userInfo = jwtDecode<DecodedToken>(authState.idToken);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
     }
 
     return (
@@ -169,6 +175,24 @@ const UserPage = () => {
       </div>
     );
   }
+}
+
+// Main component with Suspense boundary
+const UserPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-screen">
+          <div className="text-center">
+            <h1 className="text-xl font-bold mb-4">Loading...</h1>
+            <p>Please wait while we load the page...</p>
+          </div>
+        </div>
+      }
+    >
+      <UserPageContent />
+    </Suspense>
+  );
 };
 
 export default UserPage;

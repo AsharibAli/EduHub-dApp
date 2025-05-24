@@ -1,4 +1,7 @@
 "use client";
+
+export const dynamic = "force-dynamic";
+
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import contractJson from "@/contracts/StudyTracker.sol/StudyTracker.json";
@@ -40,13 +43,13 @@ const StudyTracker: React.FC = () => {
     useState<boolean>(false);
 
   useEffect(() => {
-    if (isConnected && authState.idToken) {
+    if (isConnected && authState?.idToken) {
       const decodedToken = jwtDecode<DecodedToken>(authState.idToken);
       setOcidUsername(decodedToken.edu_username);
     } else {
       setOcidUsername(null);
     }
-  }, [isConnected, authState.idToken]);
+  }, [isConnected, authState?.idToken]);
 
   const handleConnect = async (address: string) => {
     try {
