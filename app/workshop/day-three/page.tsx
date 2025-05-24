@@ -215,10 +215,10 @@ export default function DayThree() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <div
           className="w-full relative cursor-pointer group"
-          onClick={() => openFullSize("/bootcamp-day-three-1.png")}
+          onClick={() => openFullSize("/before.png")}
         >
           <Image
-            src="/bootcamp-day-three-1.png"
+            src="/before.png"
             alt="DApp Before State Update"
             width={600}
             height={400}
@@ -233,10 +233,10 @@ export default function DayThree() {
         </div>
         <div
           className="w-full relative cursor-pointer group"
-          onClick={() => openFullSize("/bootcamp-day-three-2.png")}
+          onClick={() => openFullSize("/after.png")}
         >
           <Image
-            src="/bootcamp-day-three-2.png"
+            src="/after.png"
             alt="DApp After State Update"
             width={600}
             height={400}
