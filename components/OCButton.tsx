@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 interface OCButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   variant?: "default" | "outline";
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
 }
 
 const OCButton: React.FC<OCButtonProps> = ({
@@ -25,9 +25,17 @@ const OCButton: React.FC<OCButtonProps> = ({
   };
 
   const sizes = {
+    xs: "px-3 py-1 text-sm",
     sm: "px-4 py-1.5 text-sm",
-    md: "px-6 py-2 text-base",
-    lg: "px-8 py-3 text-lg",
+    md: "px-5 py-2 text-base",
+    lg: "px-6 py-2.5 text-lg",
+  };
+
+  const iconSizes = {
+    xs: "h-5 w-5",
+    sm: "h-6 w-6",
+    md: "h-7 w-7",
+    lg: "h-8 w-8",
   };
 
   return (
@@ -37,9 +45,9 @@ const OCButton: React.FC<OCButtonProps> = ({
       className={cn(baseStyles, variants[variant], sizes[size], className)}
       {...props}
     >
-      <div className="flex items-center justify-center space-x-3">
+      <div className="flex items-center justify-center space-x-2">
         <svg
-          className="h-8 w-8"
+          className={iconSizes[size]}
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 44 44"

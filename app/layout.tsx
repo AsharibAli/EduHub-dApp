@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import OCIDProvider from "../components/OCIDProvider";
-import Script from "next/script";
 import Banner from "@/components/banner/Banner";
 import { BannerProvider } from "@/components/banner/BannerContext";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "EduHub dApp 🔥",
   description:
-    "⚡EduHub is building vibe community and developer tools for EduChain 🚀",
+    "EduHub is building vibe tooling for community and developers on EduChain.",
 };
 
 export default function RootLayout({

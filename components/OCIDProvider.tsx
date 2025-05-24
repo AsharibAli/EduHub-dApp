@@ -1,5 +1,5 @@
 "use client";
-// components/OCIDProvider.tsx
+
 import { FC, ReactNode } from "react";
 import { OCConnect } from "@opencampus/ocid-connect-js";
 
@@ -8,12 +8,15 @@ interface OCIDProviderProps {
 }
 
 const opts = {
+  clientId: process.env.NEXT_PUBLIC_OCID_CLIENT_ID,
   redirectUri: "https://app.eduhub.dev/redirect",
-  referralCode: "5C7KSI",
+  referralCode: "PARTNER6",
 };
 
 const OCIDProvider: FC<OCIDProviderProps> = ({ children }) => (
-  <OCConnect opts={opts}>{children}</OCConnect>
+  <OCConnect opts={opts} sandboxMode={false}>
+    {children}
+  </OCConnect>
 );
 
 export default OCIDProvider;

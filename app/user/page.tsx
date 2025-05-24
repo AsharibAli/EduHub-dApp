@@ -1,7 +1,7 @@
 "use client";
 import { useOCAuth } from "@opencampus/ocid-connect-js";
 import { jwtDecode } from "jwt-decode";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import LoginButton from "../../components/LoginButton";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useEffect, useState } from "react";
 
 interface DecodedToken {
   user_id: number;
@@ -26,8 +27,40 @@ interface DecodedToken {
 }
 
 const UserPage = () => {
-  const { authState } = useOCAuth();
+  const { isInitialized, authState, ocAuth } = useOCAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams?.get("redirectTo");
+
+  const handleLogout = async () => {
+    // Redirect back to home page after logout
+    await ocAuth.logout({ returnUrl: window.location.origin });
+  };
+
+  useEffect(() => {
+    // If user is authenticated and there's a redirect path, go there
+    if (isInitialized && authState.isAuthenticated && redirectTo) {
+      router.push(redirectTo);
+    }
+  }, [isInitialized, authState.isAuthenticated, redirectTo, router]);
+
+  // Store redirect destination for use with the LoginButton
+  useEffect(() => {
+    if (redirectTo) {
+      localStorage.setItem("redirectTo", redirectTo);
+    }
+  }, [redirectTo]);
+
+  if (!isInitialized) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-center">
+          <h1 className="text-xl font-bold mb-4">Loading...</h1>
+          <p>Please wait while we initialize authentication.</p>
+        </div>
+      </div>
+    );
+  }
 
   if (authState.error) {
     return (
@@ -65,7 +98,9 @@ const UserPage = () => {
                     Connect with OCID
                   </CardTitle>
                   <p className="mb-6 text-gray-600">
-                    Please link with open campus to view your details.
+                    {redirectTo
+                      ? "Please connect your OCID to start the tutorial."
+                      : "Please link with open campus to view your details."}
                   </p>
                   <LoginButton />
                 </div>
@@ -73,16 +108,16 @@ const UserPage = () => {
             </CardHeader>
             {userInfo && (
               <CardContent>
-                <div>
-
+                <div className="space-y-2">
                   <p>
                     <strong>User ID:</strong> {userInfo.user_id}
-                  </p>            
+                  </p>
                   <p>
                     <strong>(OCID) Username:</strong> {userInfo.edu_username}
                   </p>
                   <p>
-                    <strong>(OCID) Wallet Address:</strong> {userInfo.eth_address}
+                    <strong>(OCID) Wallet Address:</strong>{" "}
+                    {userInfo.eth_address}
                   </p>
                   <p>
                     <strong>Issuer:</strong> {userInfo.iss}
@@ -98,17 +133,35 @@ const UserPage = () => {
                   <p>
                     <strong>Audience:</strong> {userInfo.aud}
                   </p>
-
                 </div>
               </CardContent>
             )}
-            <CardFooter className="flex justify-center">
+            <CardFooter className="flex flex-wrap justify-center gap-4 mt-4">
               <Button
                 onClick={() => router.push("/")}
                 className="bg-teal-400 hover:bg-teal-700 text-black font-bold py-2 px-4 rounded-md"
               >
                 Go to Home
               </Button>
+
+              {userInfo && (
+                <Button
+                  onClick={handleLogout}
+                  className="bg-teal-400 hover:bg-teal-700 text-black font-bold py-2 px-4 rounded-md"
+                >
+                  Log Out
+                </Button>
+              )}
+
+              {redirectTo && userInfo && (
+                <Button
+                  onClick={() => router.push(redirectTo)}
+                  className="bg-teal-600 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded-md"
+                >
+                  Continue to{" "}
+                  {redirectTo.includes("tutorial") ? "Tutorial" : "Workshop"}
+                </Button>
+              )}
             </CardFooter>
           </Card>
         </div>
