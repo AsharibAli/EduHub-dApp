@@ -137,7 +137,7 @@ function UserPageContent() {
                     {new Date(userInfo.exp * 1000).toLocaleString()}
                   </p>
                   <p>
-                    <strong>Audience:</strong> app.eduhub.dev
+                    <strong>Audience:</strong> EduHub
                   </p>
                 </div>
               </CardContent>
