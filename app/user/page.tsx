@@ -119,10 +119,10 @@ function UserPageContent() {
                     <strong>User ID:</strong> {userInfo.user_id}
                   </p>
                   <p>
-                    <strong>(OCID) Username:</strong> {userInfo.edu_username}
+                    <strong>Username:</strong> {userInfo.edu_username}
                   </p>
                   <p>
-                    <strong>(OCID) Wallet Address:</strong>{" "}
+                    <strong>Wallet Address:</strong>{" "}
                     {userInfo.eth_address}
                   </p>
                   <p>
@@ -137,7 +137,7 @@ function UserPageContent() {
                     {new Date(userInfo.exp * 1000).toLocaleString()}
                   </p>
                   <p>
-                    <strong>Audience:</strong> {userInfo.aud}
+                    <strong>Audience:</strong> app.eduhub.dev
                   </p>
                 </div>
               </CardContent>
