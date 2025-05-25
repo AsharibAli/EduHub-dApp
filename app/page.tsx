@@ -59,7 +59,7 @@ export default function Home() {
         <div className="text-center mb-10">
           <h1 className="text-5xl font-extrabold text-teal-800 mb-6">EduHub</h1>
           <p className="text-2xl text-teal-600 max-w-2xl mx-auto leading-relaxed">
-            A simple learning dApp that allows you to first learn and then mint
+            A simple learning dApp that allows you to first learn and then prove that by minting 
             verifiable credentials.
           </p>
         </div>
