@@ -55,27 +55,29 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-teal-50">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-20 my-10">
-        <div className="text-center mb-10">
-          <h1 className="text-5xl font-extrabold text-teal-800 mb-6">EduHub</h1>
-          <p className="text-2xl text-teal-600 max-w-2xl mx-auto leading-relaxed">
+      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 mt-16 sm:mt-10">
+        <div className="text-center mb-8 sm:mb-10">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-800 mb-4 sm:mb-6 leading-tight">
+            EduHub
+          </h1>
+          <p className="text-lg sm:text-xl lg:text-2xl text-teal-600 max-w-2xl mx-auto leading-relaxed px-2">
             A simple learning dApp that allows you to first learn and then prove
             it by minting verifiable credentials.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {/* Workshop Section */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-teal-800 mb-2">
+            <div className="p-4 sm:p-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-teal-800 mb-3 sm:mb-2">
                 Workshop
               </h2>
               <ContentCard>
-                <h3 className="text-xl font-semibold text-teal-700 mb-3">
+                <h3 className="text-lg sm:text-xl font-semibold text-teal-700 mb-3">
                   Intro to Blockchain
                 </h3>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 mb-4 text-sm sm:text-base leading-relaxed">
                   A comprehensive introductory level course for beginners who
                   want to get started in blockchain and Web3 technologies. Learn
                   the fundamentals and core concepts in this three-day bootcamp.
@@ -90,7 +92,7 @@ export default function Home() {
                     className="mb-4"
                   >
                     <Link href={workshopProgress}>
-                      <span className="text-teal-600 hover:underline">
+                      <span className="text-teal-600 hover:underline text-sm sm:text-base">
                         Continue where you left off
                       </span>
                     </Link>
@@ -103,8 +105,10 @@ export default function Home() {
                     icon={AlertCircle}
                     className="mb-4"
                   >
-                    Connect your OCID before starting this workshop to track
-                    your progress.
+                    <span className="text-sm sm:text-base">
+                      Connect your OCID before starting this workshop to track
+                      your progress.
+                    </span>
                   </InfoAlert>
                 )}
                 <Link
@@ -114,7 +118,7 @@ export default function Home() {
                       : "/user?redirectTo=/workshop/day-one"
                   }
                 >
-                  <Button className="bg-teal-600 hover:bg-teal-700 text-white">
+                  <Button className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto text-sm sm:text-base py-2 sm:py-2 px-4 sm:px-4 touch-manipulation">
                     {isConnected
                       ? "Start Workshop"
                       : "Connect OCID & Start Workshop"}
@@ -126,15 +130,15 @@ export default function Home() {
 
           {/* Tutorial Section */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-teal-800 mb-2">
+            <div className="p-4 sm:p-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-teal-800 mb-3 sm:mb-2">
                 Tutorial
               </h2>
-              <div className="bg-white p-6 rounded-lg border border-gray-200">
-                <h3 className="text-xl font-semibold text-teal-700 mb-3">
+              <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200">
+                <h3 className="text-lg sm:text-xl font-semibold text-teal-700 mb-3">
                   OCID & OCA
                 </h3>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 mb-4 text-sm sm:text-base leading-relaxed">
                   Learn about the Open Campus SDK. This tutorial guides you
                   through integrating Open Campus ID (OCID) and Open Campus
                   Achievements (OCA) into your dApps with practical examples.
@@ -173,7 +177,7 @@ export default function Home() {
                       : "/user?redirectTo=/tutorial/ocid/introduction"
                   }
                 >
-                  <Button className="bg-teal-600 hover:bg-teal-700 text-white">
+                  <Button className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto text-sm sm:text-base py-2 sm:py-2 px-4 sm:px-4 touch-manipulation">
                     {isConnected
                       ? "Start Tutorial"
                       : "Connect OCID & Start Tutorial"}

@@ -8,10 +8,25 @@ import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "EduHub dApp 🔥",
   description:
     "EduHub is building vibe tooling for community and developers on EduChain.",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  themeColor: "#0f766e",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "EduHub dApp",
+  },
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export default function RootLayout({
@@ -21,6 +36,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+        <meta name="theme-color" content="#0f766e" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="format-detection" content="telephone=no" />
+      </head>
       <Script
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-0D5VHKEZ6B"
@@ -34,7 +59,7 @@ export default function RootLayout({
   gtag('config', 'G-0D5VHKEZ6B');
   `}
       </Script>
-      <body className={inter.className}>
+      <body className={`${inter.className} text-mobile-optimized`}>
         <OCIDProvider>
           <BannerProvider>
             <Banner />

@@ -50,7 +50,7 @@ const Banner = () => {
   return (
     <div
       className={cn(
-        "fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] p-4",
+        "fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] p-3 sm:p-4",
         "animate-in fade-in duration-300",
         "backdrop-blur-sm"
       )}
@@ -58,28 +58,31 @@ const Banner = () => {
       aria-modal="true"
       aria-labelledby="banner-title"
     >
-      <Card className="w-full max-w-xl relative animate-in slide-in-from-bottom-4 duration-500">
+      <Card className="w-full max-w-lg sm:max-w-xl relative animate-in slide-in-from-bottom-4 duration-500 mx-4">
         <button
           onClick={hideBanner}
-          className="absolute right-4 top-4 p-1 hover:bg-gray-100 rounded-full transition-colors"
+          className="absolute right-3 top-3 sm:right-4 sm:top-4 p-2 hover:bg-gray-100 rounded-full transition-colors touch-manipulation"
           aria-label="Close banner"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
 
-        <CardHeader>
-          <CardTitle id="banner-title" className="text-2xl font-bold">
+        <CardHeader className="pb-4 pr-12">
+          <CardTitle
+            id="banner-title"
+            className="text-lg sm:text-xl lg:text-2xl font-bold leading-tight"
+          >
             {BANNER_CONFIG.title}
           </CardTitle>
-          <CardDescription className="text-base mt-2">
+          <CardDescription className="text-sm sm:text-base mt-2 leading-relaxed">
             {BANNER_CONFIG.description}
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
-          <div className="flex flex-col sm:flex-row gap-3">
+        <CardContent className="pt-0">
+          <div className="flex flex-col gap-3">
             <Button
-              className="flex-1 hover:scale-105 transition-transform"
+              className="w-full hover:scale-105 transition-transform touch-manipulation py-3"
               variant="default"
               onClick={() =>
                 handleNavigation(BANNER_CONFIG.buttons.primary.href)
@@ -88,7 +91,7 @@ const Banner = () => {
               {BANNER_CONFIG.buttons.primary.text}
             </Button>
             <Button
-              className="flex-1 hover:scale-105 transition-transform"
+              className="w-full hover:scale-105 transition-transform touch-manipulation py-3"
               variant="outline"
               onClick={() =>
                 handleNavigation(BANNER_CONFIG.buttons.secondary.href)

@@ -76,38 +76,43 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-teal-50">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-20 my-10">
+      <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 mt-16 sm:mt-10">
         {/* Adjusted spacing */}
-        <div className="text-center mb-10">
-          <h1 className="text-5xl font-extrabold text-teal-800 mb-6">
+        <div className="text-center mb-8 sm:mb-10">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-800 mb-4 sm:mb-6 leading-tight">
             EduHub (v1)
           </h1>
-          <p className="text-2xl text-teal-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl lg:text-2xl text-teal-600 max-w-2xl mx-auto leading-relaxed px-2">
             Explore our educational dApps designed to help you complete tasks on
             EDU Chain
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {dapps.map((dapp, index) => (
             <Link
               href={dapp.route}
               key={index}
-              className="transform transition-transform hover:scale-105"
+              className="transform transition-transform hover:scale-105 touch-manipulation"
             >
               <Card className="h-full border-2 border-teal-200 hover:border-teal-400 bg-white shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-teal-700">
+                <CardHeader className="p-4 sm:p-6">
+                  <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-teal-700 leading-tight">
                     {dapp.title}
                   </CardTitle>
-                  <CardDescription className="text-teal-600">
+                  <CardDescription className="text-sm sm:text-base text-teal-600 leading-relaxed">
                     {dapp.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <ul className="list-disc list-inside text-teal-800">
+                <CardContent className="p-4 sm:p-6 pt-0">
+                  <ul className="list-disc list-inside text-teal-800 space-y-1">
                     {dapp.features.map((feature, i) => (
-                      <li key={i}>{feature}</li>
+                      <li
+                        key={i}
+                        className="text-xs sm:text-sm leading-relaxed"
+                      >
+                        {feature}
+                      </li>
                     ))}
                   </ul>
                 </CardContent>

@@ -21,36 +21,38 @@ export default function DayOne() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Workshop Progress */}
       <WorkshopProgress />
 
       {/* Instructor Section */}
-      <div className="bg-teal-50 p-6 rounded-lg mb-8">
-        <h2 className="text-xl font-semibold text-teal-700 mb-4">
+      <div className="bg-teal-50 p-4 sm:p-6 rounded-lg mb-6 sm:mb-8">
+        <h2 className="text-lg sm:text-xl font-semibold text-teal-700 mb-4">
           Meet Your Instructors
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Asharib Ali */}
-          <div className="bg-white rounded-lg shadow p-4 flex items-center">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-4 flex flex-col sm:flex-row items-center sm:items-start">
             <Image
               src="/asharib-pic.jpeg"
               alt="Asharib Ali"
               width={80}
               height={80}
-              className="rounded-full mr-4 object-cover"
+              className="rounded-full mb-3 sm:mb-0 sm:mr-4 object-cover flex-shrink-0"
             />
-            <div>
-              <h3 className="font-semibold text-teal-700">Asharib Ali</h3>
-              <p className="text-sm text-gray-700">
+            <div className="text-center sm:text-left">
+              <h3 className="font-semibold text-teal-700 text-sm sm:text-base">
+                Asharib Ali
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-700 mb-2">
                 Founder @ EduHub | Trainer at GIAIC
               </p>
-              <div className="flex space-x-2 mt-1">
+              <div className="flex justify-center sm:justify-start space-x-3 mt-1">
                 <a
                   href="https://x.com/0xAsharib"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-teal-700 hover:underline"
+                  className="text-xs text-teal-700 hover:underline touch-manipulation"
                 >
                   X
                 </a>
@@ -58,7 +60,7 @@ export default function DayOne() {
                   href="https://www.linkedin.com/in/asharibali/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-teal-700 hover:underline"
+                  className="text-xs text-teal-700 hover:underline touch-manipulation"
                 >
                   LinkedIn
                 </a>
@@ -66,25 +68,27 @@ export default function DayOne() {
             </div>
           </div>
           {/* Khizar Bakhtiar */}
-          <div className="bg-white rounded-lg shadow p-4 flex items-center">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-4 flex flex-col sm:flex-row items-center sm:items-start">
             <Image
               src="/khizar-pic.jpg"
               alt="Khizar Bakhtiar"
               width={80}
               height={80}
-              className="rounded-full mr-4 object-cover"
+              className="rounded-full mb-3 sm:mb-0 sm:mr-4 object-cover flex-shrink-0"
             />
-            <div>
-              <h3 className="font-semibold text-teal-700">Khizar Bakhtiar</h3>
-              <p className="text-sm text-gray-700">
+            <div className="text-center sm:text-left">
+              <h3 className="font-semibold text-teal-700 text-sm sm:text-base">
+                Khizar Bakhtiar
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-700 mb-2">
                 Co-Builder @EduHub | Blockchain Engineer @ArmUp
               </p>
-              <div className="flex space-x-2 mt-1">
+              <div className="flex justify-center sm:justify-start space-x-3 mt-1">
                 <a
                   href="https://x.com/Khizarbakhtiar1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-teal-700 hover:underline"
+                  className="text-xs text-teal-700 hover:underline touch-manipulation"
                 >
                   X
                 </a>
@@ -92,7 +96,7 @@ export default function DayOne() {
                   href="https://www.linkedin.com/in/khizarbakhtiar/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-teal-700 hover:underline"
+                  className="text-xs text-teal-700 hover:underline touch-manipulation"
                 >
                   LinkedIn
                 </a>
@@ -102,16 +106,16 @@ export default function DayOne() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold text-teal-800 mb-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-teal-800 mb-4 sm:mb-6 leading-tight">
         Introduction to Blockchain - Day 1
       </h1>
 
       {/* Video Recording Section */}
-      <div className="bg-teal-50 p-6 rounded-lg mb-8">
-        <h2 className="text-xl font-semibold text-teal-700 mb-4">
+      <div className="bg-teal-50 p-4 sm:p-6 rounded-lg mb-6 sm:mb-8">
+        <h2 className="text-lg sm:text-xl font-semibold text-teal-700 mb-3 sm:mb-4">
           Day 1 Recorded Session
         </h2>
-        <p className="mb-4">
+        <p className="mb-4 text-sm sm:text-base">
           Watch the recorded session for Day 1 of our blockchain bootcamp:
         </p>
         <a
@@ -120,19 +124,19 @@ export default function DayOne() {
           rel="noopener noreferrer"
           className="inline-block"
         >
-          <Button className="bg-teal-600 hover:bg-teal-700 text-white">
+          <Button className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto touch-manipulation">
             Watch Recording
           </Button>
         </a>
       </div>
 
       {/* Main content with each section and image */}
-      <div className="space-y-12">
+      <div className="space-y-8 sm:space-y-12">
         {/* Blockchain Architecture Section */}
-        <section className="border-b border-gray-200 pb-8">
-          <div className="flex flex-col md:flex-row gap-6">
+        <section className="border-b border-gray-200 pb-6 sm:pb-8">
+          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
             <div
-              className="w-full md:w-1/3 relative cursor-pointer flex-shrink-0 group"
+              className="w-full lg:w-1/3 relative cursor-pointer flex-shrink-0 group"
               onClick={() => openFullSize("/blockchain-architecture.webp")}
             >
               <Image
@@ -146,30 +150,30 @@ export default function DayOne() {
                 <Maximize2 className="w-4 h-4" />
               </div>
             </div>
-            <div className="md:w-2/3">
-              <h2 className="text-2xl font-bold text-teal-700 mb-3">
+            <div className="lg:w-2/3">
+              <h2 className="text-xl sm:text-2xl font-bold text-teal-700 mb-3">
                 Blockchain Architecture
               </h2>
-              <p className="text-gray-700 mb-2">
-                Blockchain architecture isn't complicated once you break it
-                down.
-              </p>
-              <p className="text-gray-700 mb-2">
-                At its core, it's a secure and decentralized way of keeping
-                records.
-              </p>
-              <p className="text-gray-700">
-                Once something's recorded, it can't be changed.
-              </p>
+              <div className="space-y-2 text-sm sm:text-base text-gray-700 leading-relaxed">
+                <p>
+                  Blockchain architecture isn't complicated once you break it
+                  down.
+                </p>
+                <p>
+                  At its core, it's a secure and decentralized way of keeping
+                  records.
+                </p>
+                <p>Once something's recorded, it can't be changed.</p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Blocks Section */}
-        <section className="border-b border-gray-200 pb-8">
-          <div className="flex flex-col md:flex-row gap-6">
+        <section className="border-b border-gray-200 pb-6 sm:pb-8">
+          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
             <div
-              className="w-full md:w-1/3 relative cursor-pointer flex-shrink-0 group"
+              className="w-full lg:w-1/3 relative cursor-pointer flex-shrink-0 group"
               onClick={() => openFullSize("/blocks.webp")}
             >
               <Image
@@ -183,18 +187,18 @@ export default function DayOne() {
                 <Maximize2 className="w-4 h-4" />
               </div>
             </div>
-            <div className="md:w-2/3">
-              <h2 className="text-2xl font-bold text-teal-700 mb-3">Blocks</h2>
-              <p className="text-gray-700 mb-2">
-                Blockchain is made up of blocks.
-              </p>
-              <p className="text-gray-700 mb-2">
-                Each block has transactions, data like money transfers or
-                contract changes.
-              </p>
-              <p className="text-gray-700">
-                Once a block is full, it's added to the chain.
-              </p>
+            <div className="lg:w-2/3">
+              <h2 className="text-xl sm:text-2xl font-bold text-teal-700 mb-3">
+                Blocks
+              </h2>
+              <div className="space-y-2 text-sm sm:text-base text-gray-700 leading-relaxed">
+                <p>Blockchain is made up of blocks.</p>
+                <p>
+                  Each block has transactions, data like money transfers or
+                  contract changes.
+                </p>
+                <p>Once a block is full, it's added to the chain.</p>
+              </div>
             </div>
           </div>
         </section>

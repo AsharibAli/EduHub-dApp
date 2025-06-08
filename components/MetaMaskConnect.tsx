@@ -15,7 +15,7 @@ const EDU_CHAIN_ID = "0xa3c3";
 export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
   onConnect,
   onDisconnect,
-  className = "bg-teal-400 hover:bg-teal-700 text-black font-bold py-2 px-4 rounded-md mb-4",
+  className = "bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg touch-manipulation",
 }) => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [accountAddress, setAccountAddress] = useState<string | undefined>(
@@ -98,9 +98,7 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
                     decimals: 18,
                   },
                   rpcUrls: ["https://rpc.edu-chain.raas.gelato.cloud"],
-                  blockExplorerUrls: [
-                    "https://educhain.blockscout.com/",
-                  ],
+                  blockExplorerUrls: ["https://educhain.blockscout.com/"],
                 },
               ],
             });
@@ -213,17 +211,38 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
 
   if (isConnected && accountAddress) {
     return (
-      <div className="text-center text-xl">
-        <h1>
-          Connected to wallet address: <strong>{accountAddress}</strong>
-        </h1>
+      <div className="w-full max-w-md mx-auto">
+        <div className="bg-teal-50 p-4 rounded-lg border border-teal-200 text-center">
+          <h3 className="text-sm font-semibold text-teal-700 mb-2">
+            Wallet Connected
+          </h3>
+          <p className="text-xs sm:text-sm text-gray-700 break-all">
+            <span className="font-mono">
+              {accountAddress.slice(0, 6)}...{accountAddress.slice(-6)}
+            </span>
+          </p>
+          <Button
+            onClick={handleDisconnect}
+            variant="outline"
+            size="sm"
+            className="mt-3 text-xs touch-manipulation"
+          >
+            Disconnect
+          </Button>
+        </div>
       </div>
     );
   }
 
   return (
-    <Button className={className} onClick={connectWallet} variant="link">
-      Connect with MetaMask
-    </Button>
+    <div className="w-full max-w-md mx-auto">
+      <Button
+        className={`w-full ${className}`}
+        onClick={connectWallet}
+        variant="default"
+      >
+        Connect with MetaMask
+      </Button>
+    </div>
   );
 };
