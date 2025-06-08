@@ -153,7 +153,7 @@ export default function CompletionPage() {
                   <p className="text-sm mt-1">
                     Check your{" "}
                     <a
-                      href={`https://id.sandbox.opencampus.xyz/public/credentials?username=${ocId}`}
+                      href={`https://id.opencampus.xyz/public/credentials?username=${ocId}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-teal-600 hover:underline font-medium"
