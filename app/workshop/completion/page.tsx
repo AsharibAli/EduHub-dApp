@@ -23,7 +23,7 @@ export default function Completion() {
         </h2>
 
         <p className="text-gray-700 mb-6">
-          You&apos;ve successfully finished all three days of our intensive
+          You've successfully finished all three days of our intensive
           blockchain developer workshop. Now you have the knowledge and skills
           to build your own decentralized applications.
         </p>

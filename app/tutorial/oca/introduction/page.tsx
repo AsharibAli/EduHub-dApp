@@ -89,8 +89,8 @@ export default function OCAIntroduction() {
             className="my-6"
             borderLeft={true}
           >
-            To issue OCAs, you&apos;ll need an OC ID (as the issuer) and an API
-            key from Open Campus. Contact your Open Campus Ambassador to obtain
+            To issue OCAs, you'll need an OC ID (as the issuer) and an API key
+            from Open Campus. Contact your Open Campus Ambassador to obtain
             these credentials.
           </InfoAlert>
         </PageSection>
@@ -122,7 +122,7 @@ export default function OCAIntroduction() {
 
         <PageSection title="Getting Started with OCA">
           <p className="text-gray-700 mb-4">
-            To integrate OCA into your application, you&apos;ll need:
+            To integrate OCA into your application, you'll need:
           </p>
 
           <ul className="list-disc list-inside text-gray-700 mb-6">
@@ -132,8 +132,8 @@ export default function OCAIntroduction() {
           </ul>
 
           <p className="text-gray-700 mb-4">
-            In the next sections, we&apos;ll explore how to use the OCA API to
-            issue and verify credentials.
+            In the next sections, we'll explore how to use the OCA API to issue
+            and verify credentials.
           </p>
         </PageSection>
       </div>

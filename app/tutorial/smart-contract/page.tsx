@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-
 "use client";
 
 import TutorialNavigation from "@/components/TutorialNavigation";
@@ -19,8 +17,8 @@ export default function SmartContractPage() {
         <p className="text-gray-700 mb-4">
           Smart contracts can enhance your OCID and OCA integration by providing
           on-chain verification, record-keeping, and additional functionality.
-          In this section, we&apos;ll explore how to create and integrate a
-          smart contract on the EDU Chain.
+          In this section, we'll explore how to create and integrate a smart
+          contract on the EDU Chain.
         </p>
 
         <div className="bg-teal-50 border-l-4 border-teal-500 p-4 my-6">
@@ -209,8 +207,8 @@ contract AchievementRegistry {
         </h2>
 
         <p className="text-gray-700 mb-4">
-          To deploy the Achievement Registry contract to EDU Chain, you&apos;ll
-          need to follow these steps:
+          To deploy the Achievement Registry contract to EDU Chain, you'll need
+          to follow these steps:
         </p>
 
         <div className="bg-white p-5 rounded-lg border border-gray-200 mb-6">
@@ -279,8 +277,8 @@ main().catch((error) => {
         <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 my-6">
           <p className="text-yellow-700">
             <strong>Important:</strong> Store your contract address securely
-            after deployment. You&apos;ll need it to interact with the contract
-            from your frontend application.
+            after deployment. You'll need it to interact with the contract from
+            your frontend application.
           </p>
         </div>
 
@@ -289,9 +287,9 @@ main().catch((error) => {
         </h2>
 
         <p className="text-gray-700 mb-4">
-          To interact with your deployed contract from the frontend, you&apos;ll
-          need Web3.js or Ethers.js. Let&apos;s see how to set up the contract
-          interaction utilities:
+          To interact with your deployed contract from the frontend, you'll need
+          Web3.js or Ethers.js. Let's see how to set up the contract interaction
+          utilities:
         </p>
 
         <div className="bg-gray-900 text-white p-4 rounded-md mb-6 overflow-x-auto">

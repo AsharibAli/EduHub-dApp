@@ -97,7 +97,7 @@ export default function CompletionPage() {
 
       <div className="bg-white p-6 rounded-lg shadow-md mb-8">
         <h2 className="text-2xl font-semibold text-teal-700 mb-4">
-          What You&apos;ve Learned
+          What You've Learned
         </h2>
         <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">
           <li>How to integrate OCID Connect into a web application</li>
@@ -123,7 +123,7 @@ export default function CompletionPage() {
             <p className="text-gray-700 mb-4">
               {claimStatus !== "success"
                 ? "Claim your verifiable credential for completing the tutorial."
-                : "You&apos;ve claimed your credential for completing this tutorial."}
+                : "You've claimed your credential for completing this tutorial."}
             </p>
 
             {claimStatus === "idle" && (

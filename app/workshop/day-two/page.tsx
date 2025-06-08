@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-
 "use client";
 
 import React, { useState } from "react";
@@ -81,8 +79,8 @@ export default function DayTwo() {
             transparent, and censorship-resistant applications.
           </p>
           <p className="text-gray-700 mb-4">
-            Today, we&apos;ll explore the core components of a blockchain dApp,
-            the technologies involved, and how they interact with each other to
+            Today, we'll explore the core components of a blockchain dApp, the
+            technologies involved, and how they interact with each other to
             create powerful decentralized solutions.
           </p>
         </section>

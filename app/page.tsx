@@ -165,8 +165,8 @@ export default function Home() {
                   <div className="bg-amber-50 p-3 rounded-md flex items-start mb-4 border border-amber-200">
                     <AlertCircle className="w-5 h-5 text-amber-500 mt-0.5 mr-2 flex-shrink-0" />
                     <p className="text-sm text-amber-700">
-                      You&apos;ll need to connect with your OCID to complete
-                      this tutorial and claim your achievement.
+                      You'll need to connect with your OCID to complete this
+                      tutorial and claim your achievement.
                     </p>
                   </div>
                 )}

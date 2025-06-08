@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import TutorialNavigation from "@/components/TutorialNavigation";

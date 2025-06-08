@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-
 "use client";
 
 import TutorialNavigation from "@/components/TutorialNavigation";
@@ -17,9 +15,9 @@ export default function OCIDProduction() {
         </h2>
 
         <p className="text-gray-700 mb-4">
-          After you&apos;ve tested your OCID integration in the Sandbox
-          environment, you&apos;ll need to transition to the Production
-          environment for your live application.
+          After you've tested your OCID integration in the Sandbox environment,
+          you'll need to transition to the Production environment for your live
+          application.
         </p>
 
         <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 my-6">
@@ -83,8 +81,8 @@ export default function OCIDProduction() {
         </h2>
 
         <p className="text-gray-700 mb-4">
-          To switch from Sandbox to Production mode, you&apos;ll need to update
-          your code in several places:
+          To switch from Sandbox to Production mode, you'll need to update your
+          code in several places:
         </p>
 
         <h3 className="text-xl font-semibold text-teal-600 mt-6 mb-3">
