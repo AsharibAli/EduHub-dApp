@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
           achievement: {
             name: "Web3 Developer Bootcamp",
             identifier: `edukit:bootcamp:${Date.now()}`,
-            description: "Successfully completed the Web3 Developer Bootcamp",
+            description: "Successfully completed the Web3 Developer Bootcamp by EduHub",
             achievementType: "Certificate"
           }
         }

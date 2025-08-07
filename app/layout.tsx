@@ -9,9 +9,9 @@ import Script from "next/script";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "EduHub dApp 🔥",
+  title: "EduHub | Learn Anything and Prove It",
   description:
-    "EduHub is building vibe tooling for community and developers on EduChain.",
+    "Building Vibe Tooling for EduChain | Vibe Tooling? simple tools for community to learn and engage, and developers to build dApps on EduChain.",
   viewport: {
     width: "device-width",
     initialScale: 1,
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "EduHub dApp",
+    title: "EduHub | Learn Anything and Prove It",
   },
   formatDetection: {
     telephone: false,
