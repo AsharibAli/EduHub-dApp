@@ -136,7 +136,7 @@ export default function Home() {
               </h2>
               <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200">
                 <h3 className="text-lg sm:text-xl font-semibold text-teal-700 mb-3">
-                  OCID & OCA
+                  Intro to OCID & OCA
                 </h3>
                 <p className="text-gray-700 mb-4 text-sm sm:text-base leading-relaxed">
                   Learn about the Open Campus SDK. This tutorial guides you
