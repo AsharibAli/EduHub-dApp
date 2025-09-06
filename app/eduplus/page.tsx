@@ -12,16 +12,20 @@ import { CheckCircle, XCircle } from "lucide-react";
 
 export default function EduPlusPage() {
   const { isInitialized, authState, ocAuth } = useOCAuth();
-  const isConnected = isInitialized && authState.isAuthenticated;
-  
+  const isConnected = isInitialized && authState?.isAuthenticated;
+
   // Get OCID for checking completion status
   const ocId = ocAuth?.getAuthState()?.OCId || "";
-  
+
   // Check if user has completed both requirements
-  const hasBootcampCredential = ocId ? hasClaimedCredential(ocId, "bootcamp") : false;
-  const hasTutorialCredential = ocId ? hasClaimedCredential(ocId, "tutorial") : false;
+  const hasBootcampCredential = ocId
+    ? hasClaimedCredential(ocId, "bootcamp")
+    : false;
+  const hasTutorialCredential = ocId
+    ? hasClaimedCredential(ocId, "tutorial")
+    : false;
   const hasEduPlusBadge = ocId ? hasClaimedCredential(ocId, "eduplus") : false;
-  
+
   const canClaimBadge = hasBootcampCredential && hasTutorialCredential;
 
   return (
@@ -37,7 +41,7 @@ export default function EduPlusPage() {
               EduPlus Badge
             </h1>
           </div>
-          
+
           <div className="bg-white p-8 rounded-lg shadow-md">
             <div className="text-center mb-8">
               <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
@@ -47,15 +51,17 @@ export default function EduPlusPage() {
                 EduPlus Achievement Badge
               </h2>
               <p className="text-gray-600">
-                Earn this badge by completing the 'Intro to Blockchain' and 'Intro to OCID & OCA' guides on EduHub, 
-                then mint verifiable credentials on-chain to prove your learning.
+                Earn this badge by completing the 'Intro to Blockchain' and
+                'Intro to OCID & OCA' guides on EduHub, then mint verifiable
+                credentials on-chain to prove your learning.
               </p>
             </div>
 
             {!isConnected ? (
               <div className="text-center bg-amber-50 p-6 rounded-lg border border-amber-200">
                 <p className="text-amber-700 mb-4">
-                  Please connect your OCID to check your eligibility for the EduPlus badge.
+                  Please connect your OCID to check your eligibility for the
+                  EduPlus badge.
                 </p>
                 <Link href="/user">
                   <Button className="bg-teal-600 hover:bg-teal-700 text-white">
@@ -77,7 +83,13 @@ export default function EduPlusPage() {
                       ) : (
                         <XCircle className="w-5 h-5 text-red-500 mr-3" />
                       )}
-                      <span className={hasBootcampCredential ? "text-green-700" : "text-red-600"}>
+                      <span
+                        className={
+                          hasBootcampCredential
+                            ? "text-green-700"
+                            : "text-red-600"
+                        }
+                      >
                         Complete Blockchain Workshop
                       </span>
                       {!hasBootcampCredential && (
@@ -94,11 +106,20 @@ export default function EduPlusPage() {
                       ) : (
                         <XCircle className="w-5 h-5 text-red-500 mr-3" />
                       )}
-                      <span className={hasTutorialCredential ? "text-green-700" : "text-red-600"}>
+                      <span
+                        className={
+                          hasTutorialCredential
+                            ? "text-green-700"
+                            : "text-red-600"
+                        }
+                      >
                         Complete OCID & OCA Tutorial
                       </span>
                       {!hasTutorialCredential && (
-                        <Link href="/tutorial/ocid/introduction" className="ml-2">
+                        <Link
+                          href="/tutorial/ocid/introduction"
+                          className="ml-2"
+                        >
                           <Button variant="outline" size="sm">
                             Start Tutorial
                           </Button>
@@ -123,7 +144,8 @@ export default function EduPlusPage() {
                       EduPlus Badge Already Claimed!
                     </h3>
                     <p className="text-green-600">
-                      You have already claimed your EduPlus badge. Check your profile to view it.
+                      You have already claimed your EduPlus badge. Check your
+                      profile to view it.
                     </p>
                     <div className="mt-4">
                       <a
@@ -142,8 +164,9 @@ export default function EduPlusPage() {
                       Complete Requirements First
                     </h3>
                     <p className="text-gray-600 mb-4">
-                      To earn the EduPlus badge, you need to complete both the Blockchain Workshop 
-                      and the OCID & OCA Tutorial, and claim their respective credentials.
+                      To earn the EduPlus badge, you need to complete both the
+                      Blockchain Workshop and the OCID & OCA Tutorial, and claim
+                      their respective credentials.
                     </p>
                     <div className="flex gap-4 justify-center">
                       {!hasBootcampCredential && (
@@ -173,7 +196,10 @@ export default function EduPlusPage() {
                     <li>Verifiable proof of blockchain and Web3 knowledge</li>
                     <li>1,000 Yuzu points when claimed to wallet (Season 3)</li>
                     <li>Recognition in the Open Campus ecosystem</li>
-                    <li>Access to exclusive EduHub community features (coming soon)</li>
+                    <li>
+                      Access to exclusive EduHub community features (coming
+                      soon)
+                    </li>
                   </ul>
                 </div>
               </div>

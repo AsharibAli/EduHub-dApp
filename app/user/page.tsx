@@ -49,10 +49,10 @@ function UserPageContent() {
 
   useEffect(() => {
     // If user is authenticated and there's a redirect path, go there
-    if (isInitialized && authState.isAuthenticated && redirectTo) {
+    if (isInitialized && authState?.isAuthenticated && redirectTo) {
       router.push(redirectTo);
     }
-  }, [isInitialized, authState.isAuthenticated, redirectTo, router]);
+  }, [isInitialized, authState?.isAuthenticated, redirectTo, router]);
 
   // Store redirect destination for use with the LoginButton
   useEffect(() => {

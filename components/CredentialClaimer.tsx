@@ -106,7 +106,7 @@ const CredentialClaimer: React.FC<CredentialClaimerProps> = ({
     <div className={`bg-white rounded-lg p-6 shadow-md ${className}`}>
       <h3 className="text-xl font-semibold text-teal-700 mb-4">{title}</h3>
 
-      {!isInitialized || !authState.isAuthenticated ? (
+      {!isInitialized || !authState?.isAuthenticated ? (
         <div>
           <p className="text-gray-700 mb-4">
             Connect your OCID to claim your credential.
@@ -142,14 +142,16 @@ const CredentialClaimer: React.FC<CredentialClaimerProps> = ({
                 <p className="font-semibold">View Your Credential</p>
                 <p className="text-sm mt-1">
                   Check your{" "}
-                  <a
-                    href={`https://id.opencampus.xyz/public/credentials?username=${ocId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-teal-600 hover:underline font-medium"
-                  >
-                    OCID profile
-                  </a>{" "}
+                      <a
+                        href={`${process.env.NODE_ENV === 'production' 
+                          ? 'https://id.opencampus.xyz' 
+                          : 'https://id.sandbox.opencampus.xyz'}/public/credentials?username=${ocId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-teal-600 hover:underline font-medium"
+                      >
+                        OCID profile
+                      </a>{" "}
                   to view your new credential.
                 </p>
               </div>

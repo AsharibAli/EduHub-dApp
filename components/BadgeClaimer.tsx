@@ -51,7 +51,7 @@ const BadgeClaimer: React.FC<BadgeClaimerProps> = ({
   const alreadyClaimed = identifier
     ? hasClaimedCredential(identifier, badgeType)
     : false;
-  
+
   if (alreadyClaimed && claimStatus === "idle") {
     setClaimStatus("success");
   }
@@ -84,12 +84,13 @@ const BadgeClaimer: React.FC<BadgeClaimerProps> = ({
       }
 
       if (claimMethod === "ocid" && !ocId) {
-        throw new Error(
-          "OCID not found. Please ensure you are logged in."
-        );
+        throw new Error("OCID not found. Please ensure you are logged in.");
       }
 
-      console.log(`Starting badge issuance to ${claimMethod}:`, claimMethod === "wallet" ? walletAddress : ocId);
+      console.log(
+        `Starting badge issuance to ${claimMethod}:`,
+        claimMethod === "wallet" ? walletAddress : ocId
+      );
 
       let result;
       if (claimMethod === "wallet") {
@@ -134,7 +135,7 @@ const BadgeClaimer: React.FC<BadgeClaimerProps> = ({
     <div className={`bg-white rounded-lg p-6 shadow-md ${className}`}>
       <h3 className="text-xl font-semibold text-teal-700 mb-4">{title}</h3>
 
-      {!isInitialized || !authState.isAuthenticated ? (
+      {!isInitialized || !authState?.isAuthenticated ? (
         <div>
           <p className="text-gray-700 mb-4">
             Connect your OCID to claim your badge.
@@ -179,7 +180,8 @@ const BadgeClaimer: React.FC<BadgeClaimerProps> = ({
               </div>
               {claimMethod === "wallet" && (
                 <p className="text-xs text-amber-600 mt-1">
-                  ⚠️ Badges issued to wallets are eligible for Yuzu Season 3 points
+                  ⚠️ Badges issued to wallets are eligible for Yuzu Season 3
+                  points
                 </p>
               )}
             </div>
@@ -200,7 +202,9 @@ const BadgeClaimer: React.FC<BadgeClaimerProps> = ({
             <div className="text-teal-700">
               <p className="font-semibold mb-2">🎉 Badge Claimed!</p>
               <p className="mb-2">
-                Your badge has been successfully issued{claimMethod === "wallet" ? " to your wallet" : " to your OCID"}.
+                Your badge has been successfully issued
+                {claimMethod === "wallet" ? " to your wallet" : " to your OCID"}
+                .
               </p>
               {claimMethod === "wallet" && (
                 <p className="text-sm text-amber-600 mb-2">
@@ -209,23 +213,49 @@ const BadgeClaimer: React.FC<BadgeClaimerProps> = ({
               )}
               <div className="mt-4 p-4 bg-teal-100 rounded-lg">
                 <p className="font-semibold">View Your Badge</p>
-                {claimMethod === "ocid" ? (
-                  <p className="text-sm mt-1">
-                    Check your{" "}
-                    <a
-                      href={`https://id.opencampus.xyz/public/credentials?username=${ocId}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-teal-600 hover:underline font-medium"
-                    >
-                      OCID profile
-                    </a>{" "}
-                    to view your new badge.
-                  </p>
+                 {claimMethod === "ocid" ? (
+                   <p className="text-sm mt-1">
+                     Check your{" "}
+                     <a
+                       href={`${process.env.NODE_ENV === 'production' 
+                         ? 'https://id.opencampus.xyz' 
+                         : 'https://id.sandbox.opencampus.xyz'}/public/credentials?username=${ocId}`}
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       className="text-teal-600 hover:underline font-medium"
+                     >
+                       OCID profile
+                     </a>{" "}
+                     to view your new badge.
+                   </p>
                 ) : (
-                  <p className="text-sm mt-1">
-                    Your badge has been issued to wallet: {walletAddress?.substring(0, 6)}...{walletAddress?.substring(walletAddress.length - 4)}
-                  </p>
+                  <div className="text-sm mt-1">
+                    <p className="mb-2">
+                      Your badge has been issued to wallet:{" "}
+                      <code className="bg-white px-2 py-1 rounded text-xs">
+                        {walletAddress?.substring(0, 6)}...
+                        {walletAddress?.substring(walletAddress.length - 4)}
+                      </code>
+                    </p>
+                    <div className="bg-blue-50 p-3 rounded border border-blue-200">
+                      <p className="font-medium text-blue-700 mb-1">
+                        📋 How to find your badge:
+                      </p>
+                      <ul className="text-xs text-blue-600 space-y-1">
+                        <li>
+                          • Badge is stored in Open Campus credential system
+                        </li>
+                        <li>
+                          • Not visible in MetaMask (it's a verifiable
+                          credential, not a token)
+                        </li>
+                        <li>
+                          • Will be automatically counted for Yuzu Season 3
+                          points
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
@@ -233,9 +263,7 @@ const BadgeClaimer: React.FC<BadgeClaimerProps> = ({
 
           {claimStatus === "error" && (
             <div className="text-red-600">
-              <p className="mb-2">
-                There was an error claiming your badge:
-              </p>
+              <p className="mb-2">There was an error claiming your badge:</p>
               <p className="text-sm bg-red-50 p-2 rounded mb-3">
                 {errorMessage}
               </p>

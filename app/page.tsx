@@ -16,7 +16,7 @@ import {
 
 export default function Home() {
   const { isInitialized, authState, ocAuth } = useOCAuth();
-  const isConnected = isInitialized && authState.isAuthenticated;
+  const isConnected = isInitialized && authState?.isAuthenticated;
   const [workshopProgress, setWorkshopProgress] = useState<string>("");
   const [tutorialProgress, setTutorialProgress] = useState<string>("");
   const [hasTutorialCredential, setHasTutorialCredential] =
@@ -73,14 +73,17 @@ export default function Home() {
               <div className="p-4 sm:p-6 text-white">
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4">
-                    <span className="text-yellow-600 text-xl font-bold">E+</span>
+                    <span className="text-yellow-600 text-xl font-bold">
+                      E+
+                    </span>
                   </div>
                   <div className="flex-1">
                     <h2 className="text-xl sm:text-2xl font-bold mb-2">
                       EduPlus Achievement Badge
                     </h2>
                     <p className="text-yellow-100 text-sm sm:text-base mb-3">
-                      Complete both Workshop and Tutorial to earn this exclusive badge with 1,000 Yuzu points!
+                      Complete both Workshop and Tutorial to earn this exclusive
+                      badge with 1,000 Yuzu points!
                     </p>
                     <Link href="/eduplus">
                       <Button className="bg-white text-yellow-600 hover:bg-yellow-50 font-semibold">
