@@ -7,6 +7,7 @@ export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as FeatureList } from "./FeatureList";
 export { default as NavigationButtons } from "./NavigationButtons";
 export { default as CredentialClaimer } from "./CredentialClaimer";
+export { default as BadgeClaimer } from "./BadgeClaimer";
 
 // Layout and page structure
 export { default as Header } from "./Header";

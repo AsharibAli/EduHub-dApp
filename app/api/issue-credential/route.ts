@@ -6,14 +6,18 @@ const OCA_API_PRODUCTION = 'https://api.vc.opencampus.xyz/issuer/vc';
 
 // Get environment variables
 const OCA_API_KEY = process.env.OCA_API_KEY;
+const OCB_API_KEY = process.env.OCB_API_KEY || process.env.OCA_API_KEY; // OCB can use same key or separate key
 const OCA_ENVIRONMENT = process.env.OCA_ENVIRONMENT || 'sandbox';
 const CREDENTIAL_IMAGE_URL = process.env.CREDENTIAL_IMAGE_URL || 'https://eduhub.dev/eduhub.png';
+const BADGE_ICON_URL = process.env.BADGE_ICON_URL || 'https://i.ibb.co/CpD567YZ/badge-icon.png';
 
 // Debug info for env variables
 console.log('======== ENV VARIABLES CHECK ========');
 console.log('OCA_ENVIRONMENT:', OCA_ENVIRONMENT);
 console.log('CREDENTIAL_IMAGE_URL is set:', !!CREDENTIAL_IMAGE_URL);
+console.log('BADGE_ICON_URL is set:', !!BADGE_ICON_URL);
 console.log('OCA_API_KEY is set:', !!OCA_API_KEY);
+console.log('OCB_API_KEY is set:', !!OCB_API_KEY);
 console.log('OCA_API_KEY length:', OCA_API_KEY ? OCA_API_KEY.length : 0);
 
 // Use appropriate API URL based on environment
@@ -38,14 +42,26 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log('Request body:', JSON.stringify(body, null, 2));
     
-    const { credentialType, holderOcId, userName, userEmail, alreadyClaimed } = body;
+    const { credentialType, holderOcId, holderAddress, userName, userEmail, alreadyClaimed, isOCB } = body;
     
-    if (!holderOcId || !userName || !userEmail) {
-      console.error('Missing required parameters:', { holderOcId, userName, userEmail });
-      return NextResponse.json(
-        { error: 'Missing required parameters' },
-        { status: 400 }
-      );
+    // For OCB, we need either holderOcId or holderAddress
+    // For OCA, we need holderOcId
+    if (isOCB) {
+      if ((!holderOcId && !holderAddress) || !userName || !userEmail) {
+        console.error('Missing required parameters for OCB:', { holderOcId, holderAddress, userName, userEmail });
+        return NextResponse.json(
+          { error: 'Missing required parameters for OCB. Need either holderOcId or holderAddress, plus userName and userEmail' },
+          { status: 400 }
+        );
+      }
+    } else {
+      if (!holderOcId || !userName || !userEmail) {
+        console.error('Missing required parameters for OCA:', { holderOcId, userName, userEmail });
+        return NextResponse.json(
+          { error: 'Missing required parameters for OCA' },
+          { status: 400 }
+        );
+      }
     }
 
     // Check if the client reports this credential was already claimed
@@ -62,85 +78,141 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if API key is configured
-    if (!OCA_API_KEY) {
-      console.error('OCA_API_KEY environment variable is not set');
+    const apiKey = isOCB ? OCB_API_KEY : OCA_API_KEY;
+    if (!apiKey) {
+      console.error(`${isOCB ? 'OCB' : 'OCA'}_API_KEY environment variable is not set`);
       return NextResponse.json(
-        { error: 'API key not configured. Please set the OCA_API_KEY environment variable.' },
+        { error: `API key not configured. Please set the ${isOCB ? 'OCB' : 'OCA'}_API_KEY environment variable.` },
         { status: 500 }
       );
     }
 
     // Check if this user already has this credential type (server-side check)
-    if (issuedCredentials[holderOcId] && issuedCredentials[holderOcId][credentialType]) {
-      console.log(`Credential of type ${credentialType} already issued to user ${holderOcId} (server-side check)`);
+    // Use holderOcId if available, otherwise use holderAddress for tracking
+    const trackingId = holderOcId || holderAddress;
+    if (trackingId && issuedCredentials[trackingId] && issuedCredentials[trackingId][credentialType]) {
+      console.log(`Credential of type ${credentialType} already issued to user ${trackingId} (server-side check)`);
       return NextResponse.json(
         { 
           success: false,
           message: 'Credential already issued',
           alreadyIssued: true,
-          issuedAt: new Date(issuedCredentials[holderOcId][credentialType]).toISOString()
+          issuedAt: new Date(issuedCredentials[trackingId][credentialType]).toISOString()
         },
         { status: 409 } // Conflict status code
       );
     }
 
-    console.log('Processing credential request with params:', { credentialType, holderOcId, userName, userEmail });
+    console.log('Processing credential request with params:', { credentialType, holderOcId, holderAddress, userName, userEmail, isOCB });
     
-    // Format credentialPayload based on OCA API documentation
+    // Format credentialPayload based on OCA/OCB API documentation
     // https://devdocs.educhain.xyz/start-building/open-campus-achievements/api-specifications
     let credentialPayload;
     
     // Get current date in ISO format for the timestamps
     const currentDate = new Date().toISOString();
     
-    // Format payload based on credential type
-    if (credentialType === 'bootcamp') {
-      credentialPayload = {
-        validFrom: currentDate,
-        awardedDate: currentDate,
-        description: "Completed the Educhain Web3 Developer Bootcamp",
-        credentialSubject: {
-          name: userName,
-          type: "Person",
-          email: userEmail,
-          image: CREDENTIAL_IMAGE_URL,
-          profileUrl: `${PROFILE_URL_BASE}${holderOcId}`,
-          achievement: {
-            name: "Web3 Developer Bootcamp",
-            identifier: `edukit:bootcamp:${Date.now()}`,
-            description: "Successfully completed the Web3 Developer Bootcamp by EduHub",
-            achievementType: "Certificate"
+    // Format payload based on credential type and whether it's OCB or OCA
+    if (isOCB) {
+      // OCB (Open Campus Badges) payloads
+      if (credentialType === 'eduplus') {
+        credentialPayload = {
+          validFrom: currentDate,
+          awardedDate: currentDate,
+          description: "Earn this badge by completing the 'Intro to Blockchain' and 'Intro to OCID & OCA' guides on EduHub, then mint verifiable credentials on-chain to prove your learning.",
+          credentialSubject: {
+            type: "Person",
+            image: BADGE_ICON_URL,
+            profileUrl: holderOcId ? `${PROFILE_URL_BASE}${holderOcId}` : undefined,
+            achievement: {
+              name: "EduPlus",
+              identifier: `eduhub:eduplus:${Date.now()}`,
+              description: "Completed both Blockchain Workshop and OCID & OCA Tutorial on EduHub",
+              achievementType: "Badge"
+            }
           }
-        }
-      };
+        };
+      } else {
+        // Default OCB payload for other badge types
+        credentialPayload = {
+          validFrom: currentDate,
+          awardedDate: currentDate,
+          description: "EduHub Achievement Badge",
+          credentialSubject: {
+            type: "Person",
+            image: BADGE_ICON_URL,
+            profileUrl: holderOcId ? `${PROFILE_URL_BASE}${holderOcId}` : undefined,
+            achievement: {
+              name: "EduHub Badge",
+              identifier: `eduhub:badge:${Date.now()}`,
+              description: "Achievement badge from EduHub",
+              achievementType: "Badge"
+            }
+          }
+        };
+      }
     } else {
-      // Default tutorial credential
-      credentialPayload = {
-        validFrom: currentDate,
-        awardedDate: currentDate,
-        description: "Completed the OCID and OCA Integration Tutorial",
-        credentialSubject: {
-          name: userName,
-          type: "Person",
-          email: userEmail,
-          image: CREDENTIAL_IMAGE_URL,
-          profileUrl: `${PROFILE_URL_BASE}${holderOcId}`,
-          achievement: {
-            name: "OCID & OCA Integration Master",
-            identifier: `edukit:${Date.now()}`,
-            description: "Successfully completed the comprehensive tutorial on integrating OCID Connect and Open Campus Achievements into dApps.",
-            achievementType: "Certificate"
+      // OCA (Open Campus Achievements) payloads
+      if (credentialType === 'bootcamp') {
+        credentialPayload = {
+          validFrom: currentDate,
+          awardedDate: currentDate,
+          description: "Completed the Educhain Web3 Developer Bootcamp",
+          credentialSubject: {
+            name: userName,
+            type: "Person",
+            email: userEmail,
+            image: CREDENTIAL_IMAGE_URL,
+            profileUrl: `${PROFILE_URL_BASE}${holderOcId}`,
+            achievement: {
+              name: "Web3 Developer Bootcamp",
+              identifier: `edukit:bootcamp:${Date.now()}`,
+              description: "Successfully completed the Web3 Developer Bootcamp by EduHub",
+              achievementType: "Certificate"
+            }
           }
-        }
-      };
+        };
+      } else {
+        // Default tutorial credential
+        credentialPayload = {
+          validFrom: currentDate,
+          awardedDate: currentDate,
+          description: "Completed the OCID and OCA Integration Tutorial",
+          credentialSubject: {
+            name: userName,
+            type: "Person",
+            email: userEmail,
+            image: CREDENTIAL_IMAGE_URL,
+            profileUrl: `${PROFILE_URL_BASE}${holderOcId}`,
+            achievement: {
+              name: "OCID & OCA Integration Master",
+              identifier: `edukit:${Date.now()}`,
+              description: "Successfully completed the comprehensive tutorial on integrating OCID Connect and Open Campus Achievements into dApps.",
+              achievementType: "Certificate"
+            }
+          }
+        };
+      }
     }
 
     // Exact structure according to docs:
     // https://devdocs.educhain.xyz/start-building/open-campus-achievements/api-specifications
-    const payload = {
-      credentialPayload: credentialPayload,
-      holderOcId: holderOcId
+    let payload: any = {
+      credentialPayload: credentialPayload
     };
+
+    if (isOCB) {
+      // OCB requires collectionSymbol and either holderOcId or holderAddress
+      payload.collectionSymbol = "ocbadge";
+      if (holderAddress) {
+        payload.holderAddress = holderAddress;
+      } else {
+        payload.holderOcId = holderOcId;
+      }
+    } else {
+      // OCA requires holderOcId
+      payload.holderOcId = holderOcId;
+    }
 
     console.log('======== SENDING TO OCA API ========');
     console.log('OCA API URL:', OCA_API_URL);
@@ -149,7 +221,7 @@ export async function POST(request: NextRequest) {
     // Debug headers without showing the full API key
     const requestHeaders = {
       'Content-Type': 'application/json',
-      'X-API-KEY': OCA_API_KEY ? `${OCA_API_KEY.substring(0, 3)}...${OCA_API_KEY.substring(OCA_API_KEY.length - 3)}` : 'not-set'
+      'X-API-KEY': apiKey ? `${apiKey.substring(0, 3)}...${apiKey.substring(apiKey.length - 3)}` : 'not-set'
     };
     console.log('Request headers (partial):', JSON.stringify(requestHeaders, null, 2));
 
@@ -160,7 +232,7 @@ export async function POST(request: NextRequest) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-KEY': OCA_API_KEY || '',
+          'X-API-KEY': apiKey || '',
         },
         body: JSON.stringify(payload),
       });
@@ -222,19 +294,24 @@ export async function POST(request: NextRequest) {
     console.log('OCA API success response:', JSON.stringify(data, null, 2));
     
     // Store the issued credential in our tracking system
-    if (!issuedCredentials[holderOcId]) {
-      issuedCredentials[holderOcId] = {};
+    // Use trackingId (holderOcId or holderAddress) for consistent tracking
+    if (trackingId) {
+      if (!issuedCredentials[trackingId]) {
+        issuedCredentials[trackingId] = {};
+      }
+      issuedCredentials[trackingId][credentialType] = Date.now();
     }
-    issuedCredentials[holderOcId][credentialType] = Date.now();
     
     return NextResponse.json({
       success: true,
-      message: 'Credential issued successfully',
+      message: isOCB ? 'Badge issued successfully' : 'Credential issued successfully',
       data: data,
       // Send this back so the client can store it in localStorage
       claimRecord: {
-        holderOcId,
+        holderOcId: holderOcId || null,
+        holderAddress: holderAddress || null,
         credentialType,
+        isOCB,
         issuedAt: Date.now()
       }
     });

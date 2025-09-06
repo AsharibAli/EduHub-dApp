@@ -66,6 +66,34 @@ export default function Home() {
           </p>
         </div>
 
+        {/* EduPlus Badge Section */}
+        {isConnected && (
+          <div className="mb-8 max-w-6xl mx-auto">
+            <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg shadow-lg overflow-hidden">
+              <div className="p-4 sm:p-6 text-white">
+                <div className="flex items-center">
+                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4">
+                    <span className="text-yellow-600 text-xl font-bold">E+</span>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-xl sm:text-2xl font-bold mb-2">
+                      EduPlus Achievement Badge
+                    </h2>
+                    <p className="text-yellow-100 text-sm sm:text-base mb-3">
+                      Complete both Workshop and Tutorial to earn this exclusive badge with 1,000 Yuzu points!
+                    </p>
+                    <Link href="/eduplus">
+                      <Button className="bg-white text-yellow-600 hover:bg-yellow-50 font-semibold">
+                        Check Eligibility →
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {/* Workshop Section */}
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
