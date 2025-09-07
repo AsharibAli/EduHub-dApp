@@ -44,7 +44,7 @@ export default function EduPlusPage() {
 
           <div className="bg-white p-8 rounded-lg shadow-md">
             <div className="text-center mb-8">
-              <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
+              <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-teal-500 to-teal-700 rounded-full flex items-center justify-center">
                 <span className="text-white text-2xl font-bold">E+</span>
               </div>
               <h2 className="text-2xl font-semibold text-teal-700 mb-2">

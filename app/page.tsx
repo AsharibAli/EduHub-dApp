@@ -69,11 +69,11 @@ export default function Home() {
         {/* EduPlus Badge Section */}
         {isConnected && (
           <div className="mb-8 max-w-6xl mx-auto">
-            <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-teal-500 to-teal-700 rounded-lg shadow-lg overflow-hidden">
               <div className="p-4 sm:p-6 text-white">
                 <div className="flex items-center">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4">
-                    <span className="text-yellow-600 text-xl font-bold">
+                    <span className="text-teal-600 text-xl font-bold">
                       E+
                     </span>
                   </div>
@@ -81,12 +81,12 @@ export default function Home() {
                     <h2 className="text-xl sm:text-2xl font-bold mb-2">
                       EduPlus Achievement Badge
                     </h2>
-                    <p className="text-yellow-100 text-sm sm:text-base mb-3">
+                    <p className="text-teal-100 text-sm sm:text-base mb-3">
                       Complete both Workshop and Tutorial to earn this exclusive
                       badge with 1,000 Yuzu points!
                     </p>
                     <Link href="/eduplus">
-                      <Button className="bg-white text-yellow-600 hover:bg-yellow-50 font-semibold">
+                      <Button className="bg-white text-teal-600 hover:bg-teal-50 font-semibold">
                         Check Eligibility →
                       </Button>
                     </Link>

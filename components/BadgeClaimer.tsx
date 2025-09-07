@@ -6,6 +6,7 @@ import LoginButton from "@/components/LoginButton";
 import { issueBadgeToOCID, issueBadgeToWallet } from "@/lib/oca";
 import LoadingSpinner from "./LoadingSpinner";
 import { hasClaimedCredential } from "@/utils/credentialStorage";
+import Link from "next/link";
 
 interface DecodedToken {
   user_id: number;
@@ -257,6 +258,15 @@ const BadgeClaimer: React.FC<BadgeClaimerProps> = ({
                     </div>
                   </div>
                 )}
+              </div>
+              
+              {/* Go Back Home Button */}
+              <div className="mt-6 pt-4 border-t border-teal-200">
+                <Link href="/">
+                  <Button className="bg-teal-600 hover:bg-teal-700 text-white w-full">
+                    ← Go Back Home
+                  </Button>
+                </Link>
               </div>
             </div>
           )}
