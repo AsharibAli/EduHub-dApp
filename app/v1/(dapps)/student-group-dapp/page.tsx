@@ -34,7 +34,7 @@ const contractAddress = "0x82E7ADFe34DC795475582133Ffe91147f22e0c39";
 
 export default function StudyGroup() {
   const { isInitialized, authState } = useOCAuth();
-  const isConnected = isInitialized && authState.isAuthenticated;
+  const isConnected = isInitialized && authState?.isAuthenticated;
   const { toast } = useToast();
 
   const [web3, setWeb3] = useState<Web3 | null>(null);

@@ -1,8 +1,10 @@
 // Credential storage utility
 
 type CredentialClaim = {
-  holderOcId: string;
+  holderOcId: string | null;
+  holderAddress?: string | null;
   credentialType: string;
+  isOCB?: boolean;
   issuedAt: number;
 };
 
@@ -11,12 +13,12 @@ const CLAIMED_CREDENTIALS_KEY = "eduhub_claimed_credentials";
 
 /**
  * Check if a credential has already been claimed
- * @param holderOcId The user's OC ID
- * @param credentialType The type of credential ('bootcamp' or default tutorial)
+ * @param identifier The user's OC ID or wallet address
+ * @param credentialType The type of credential ('bootcamp', 'tutorial', 'eduplus', etc.)
  * @returns boolean indicating if the credential was already claimed
  */
 export function hasClaimedCredential(
-  holderOcId: string,
+  identifier: string,
   credentialType: string
 ): boolean {
   // Don't attempt localStorage access during SSR
@@ -30,7 +32,7 @@ export function hasClaimedCredential(
 
     return existingClaims.some(
       (claim) =>
-        claim.holderOcId === holderOcId &&
+        (claim.holderOcId === identifier || claim.holderAddress === identifier) &&
         claim.credentialType === credentialType
     );
   } catch (error) {
@@ -57,7 +59,8 @@ export function storeClaimedCredential(claim: CredentialClaim): void {
     // Check if this credential is already claimed
     const alreadyClaimed = existingClaims.some(
       (c) =>
-        c.holderOcId === claim.holderOcId &&
+        (c.holderOcId === claim.holderOcId || 
+         c.holderAddress === claim.holderAddress) &&
         c.credentialType === claim.credentialType
     );
 
@@ -76,11 +79,11 @@ export function storeClaimedCredential(claim: CredentialClaim): void {
 
 /**
  * Get all credentials claimed by a user
- * @param holderOcId The user's OC ID
+ * @param identifier The user's OC ID or wallet address
  * @returns Array of claimed credentials
  */
 export function getUserClaimedCredentials(
-  holderOcId: string
+  identifier: string
 ): CredentialClaim[] {
   // Don't attempt localStorage access during SSR
   if (typeof window === "undefined") return [];
@@ -91,7 +94,9 @@ export function getUserClaimedCredentials(
 
     const existingClaims: CredentialClaim[] = JSON.parse(existingClaimsStr);
 
-    return existingClaims.filter((claim) => claim.holderOcId === holderOcId);
+    return existingClaims.filter(
+      (claim) => claim.holderOcId === identifier || claim.holderAddress === identifier
+    );
   } catch (error) {
     console.error("Error retrieving user credential claims:", error);
     return [];
