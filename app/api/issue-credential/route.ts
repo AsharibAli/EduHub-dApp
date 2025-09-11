@@ -188,7 +188,7 @@ export async function POST(request: NextRequest) {
               name: "EduPlus",
               identifier: `eduhub:eduplus:${Date.now()}`,
               description:
-                "Completed both Blockchain Workshop and OCID & OCA Tutorial on EduHub - Issued to EOA for Yuzu eligibility",
+                "Completed both Blockchain Workshop and OCID & OCA Tutorial on EduHub",
               achievementType: "Badge",
             },
           },
@@ -208,7 +208,7 @@ export async function POST(request: NextRequest) {
               name: "EduHub Badge",
               identifier: `eduhub:badge:${Date.now()}`,
               description:
-                "Achievement badge from EduHub - Issued to EOA for Yuzu eligibility",
+                "Achievement badge from EduHub",
               achievementType: "Badge",
             },
           },
