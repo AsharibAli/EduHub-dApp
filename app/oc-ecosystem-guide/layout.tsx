@@ -1,15 +1,15 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import TutorialProgress from "@/components/TutorialProgress";
+import OCEcosystemProgress from "@/components/OCEcosystemProgress";
 import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "OCID & OCA Integration Tutorial | EduKit",
-  description: "Learn how to integrate Open Campus ID and Open Campus Achievements into your dApp",
+  title: "OC Ecosystem Guide | EduKit",
+  description: "Learn about the Open Campus Ecosystem: OCID, OCA, and OCB",
 };
 
-export default function TutorialLayout({
+export default function OCEcosystemGuideLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -24,17 +24,15 @@ export default function TutorialLayout({
               ← Back to Home
             </Link>
             <h1 className="text-3xl font-bold text-teal-800 mt-2">
-              OCID & OCA Tutorial
+              OC Ecosystem Guide
             </h1>
           </div>
-          <TutorialProgress />
-          
-          <div className="bg-white p-8 rounded-lg shadow-md">
-            {children}
-          </div>
+          <OCEcosystemProgress />
+
+          <div className="bg-white p-8 rounded-lg shadow-md">{children}</div>
         </div>
       </main>
       <Footer />
     </div>
   );
-} 
+}

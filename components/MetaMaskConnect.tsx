@@ -182,13 +182,9 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
   };
 
   const connectWallet = async () => {
-    console.log("=== MetaMask Connection Debug ===");
     const ethereum = getMetaMaskProvider();
-    console.log("MetaMask provider found:", !!ethereum);
-    console.log("Provider details:", ethereum);
 
     if (!ethereum) {
-      console.log("MetaMask not detected");
       toast({
         variant: "destructive",
         title: "MetaMask Required",
@@ -198,20 +194,15 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
     }
 
     try {
-      console.log("Requesting MetaMask accounts...");
-
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
-
-      console.log("MetaMask accounts received:", accounts);
 
       if (accounts.length === 0) {
         throw new Error("No accounts returned from MetaMask");
       }
 
       const account = accounts[0];
-      console.log("Setting account:", account);
 
       setAccountAddress(account);
       setIsConnected(true);

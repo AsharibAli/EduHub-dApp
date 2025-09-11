@@ -179,7 +179,7 @@ export async function POST(request: NextRequest) {
           validFrom: currentDate,
           awardedDate: currentDate,
           description:
-            "Earn this badge by completing the 'Intro to Blockchain' and 'Intro to OCID & OCA' guides on EduHub, then mint verifiable credentials on-chain to prove your learning. Issued to EOA wallet for Yuzu Season 3 eligibility.",
+            "Earn this badge by completing the 'Intro to Blockchain' and 'Intro to OC Ecosystem' guides on EduHub, then mint verifiable credentials on-chain to prove your learning. Issued to EOA wallet for Yuzu Season 3 eligibility.",
           credentialSubject: {
             type: "Person",
             image: BADGE_ICON_URL,
@@ -188,7 +188,7 @@ export async function POST(request: NextRequest) {
               name: "EduPlus",
               identifier: `eduhub:eduplus:${Date.now()}`,
               description:
-                "Completed both Blockchain Workshop and OCID & OCA Tutorial on EduHub",
+                "Completed both Blockchain Workshop and OC Ecosystem Guide on EduHub",
               achievementType: "Badge",
             },
           },
@@ -207,8 +207,7 @@ export async function POST(request: NextRequest) {
             achievement: {
               name: "EduHub Badge",
               identifier: `eduhub:badge:${Date.now()}`,
-              description:
-                "Achievement badge from EduHub",
+              description: "Achievement badge from EduHub",
               achievementType: "Badge",
             },
           },
@@ -237,11 +236,11 @@ export async function POST(request: NextRequest) {
           },
         };
       } else {
-        // Default tutorial credential
+        // Default OC Ecosystem credential
         credentialPayload = {
           validFrom: currentDate,
           awardedDate: currentDate,
-          description: "Completed the OCID and OCA Integration Tutorial",
+          description: "Completed the OC Ecosystem Integration Guide",
           credentialSubject: {
             name: userName,
             type: "Person",
@@ -252,7 +251,7 @@ export async function POST(request: NextRequest) {
               name: "OCID & OCA Integration Master",
               identifier: `edukit:${Date.now()}`,
               description:
-                "Successfully completed the comprehensive tutorial on integrating OCID Connect and Open Campus Achievements into dApps.",
+                "Successfully completed the comprehensive guide on integrating OCID Connect and Open Campus Achievements into dApps.",
               achievementType: "Certificate",
             },
           },

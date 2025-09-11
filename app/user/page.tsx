@@ -151,7 +151,7 @@ function UserPageContent() {
                   </CardTitle>
                   <p className="text-sm sm:text-base text-gray-600 mb-6 leading-relaxed">
                     {redirectTo
-                      ? "Please connect your OCID to start the tutorial."
+                      ? "Please connect your OCID to start the guide."
                       : "Please link with Open Campus to view your details."}
                   </p>
                   <LoginButton className="w-full sm:w-auto" />
@@ -259,7 +259,9 @@ function UserPageContent() {
                   >
                     <ArrowRight className="h-4 w-4 mr-2" />
                     Continue to{" "}
-                    {redirectTo.includes("tutorial") ? "Tutorial" : "Workshop"}
+                    {redirectTo.includes("oc-ecosystem-guide")
+                      ? "OC Ecosystem Guide"
+                      : "Workshop"}
                   </Button>
                 )}
 

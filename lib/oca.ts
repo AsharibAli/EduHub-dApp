@@ -27,7 +27,7 @@ export async function issueCredential(
   userEmail: string
 ) {
   try {
-    console.log("Attempting to issue tutorial credential for:", holderOcId);
+    console.log("Attempting to issue OC Ecosystem credential for:", holderOcId);
 
     // Check if user already claimed this credential
     const credentialType = "tutorial";
