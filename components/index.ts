@@ -7,7 +7,8 @@ export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as FeatureList } from "./FeatureList";
 export { default as NavigationButtons } from "./NavigationButtons";
 export { default as CredentialClaimer } from "./CredentialClaimer";
-export { default as BadgeClaimer } from "./BadgeClaimer";
+export { default as EOABadgeClaimer } from "./EOABadgeClaimer";
+export { default as YuzuEligibilityInfo } from "./YuzuEligibilityInfo";
 
 // Layout and page structure
 export { default as Header } from "./Header";
@@ -23,3 +24,5 @@ export { default as ProgressBar } from "./ProgressBar";
 // Authentication
 export { default as LoginButton } from "./LoginButton";
 export { default as OCButton } from "./OCButton";
+export { MetaMaskConnect } from "./MetaMaskConnect";
+export { DirectMetaMaskConnect } from "./DirectMetaMaskConnect";

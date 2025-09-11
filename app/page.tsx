@@ -66,16 +66,17 @@ export default function Home() {
           </p>
         </div>
 
-        {/* EduPlus Badge Section */}
-        {isConnected && (
-          <div className="mb-8 max-w-6xl mx-auto">
-            <div className="bg-gradient-to-r from-teal-500 to-teal-700 rounded-lg shadow-lg overflow-hidden">
+        {/* EduPlus Badge Section - Always Visible */}
+        <div className="mb-8 max-w-6xl mx-auto">
+          <div className="relative">
+            {/* Glowing border effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-500 rounded-xl blur-sm opacity-75 animate-pulse"></div>
+            {/* Main content */}
+            <div className="relative bg-gradient-to-r from-teal-500 to-teal-700 rounded-xl shadow-xl overflow-hidden">
               <div className="p-4 sm:p-6 text-white">
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4">
-                    <span className="text-teal-600 text-xl font-bold">
-                      E+
-                    </span>
+                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4 shadow-lg">
+                    <span className="text-teal-600 text-xl font-bold">E+</span>
                   </div>
                   <div className="flex-1">
                     <h2 className="text-xl sm:text-2xl font-bold mb-2">
@@ -85,9 +86,11 @@ export default function Home() {
                       Complete both Workshop and Tutorial to earn this exclusive
                       badge with 1,000 Yuzu points!
                     </p>
-                    <Link href="/eduplus">
+                    <Link href={isConnected ? "/eduplus" : "/user"}>
                       <Button className="bg-white text-teal-600 hover:bg-teal-50 font-semibold">
-                        Check Eligibility →
+                        {isConnected
+                          ? "Check Eligibility →"
+                          : "Connect OCID to Begin →"}
                       </Button>
                     </Link>
                   </div>
@@ -95,7 +98,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        )}
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {/* Workshop Section */}
