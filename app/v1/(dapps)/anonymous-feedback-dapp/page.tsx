@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import LoginButton from "@/components/LoginButton";
 import { useOCAuth } from "@opencampus/ocid-connect-js";
 import { jwtDecode } from "jwt-decode";
-import { Contracts } from "@/types";
+import type { Contracts } from "@/types";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
