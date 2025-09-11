@@ -62,10 +62,10 @@ const FeedbackApp: React.FC = () => {
       setIsMetaMaskConnected(true);
 
       const contractAddress = "0x1f99874fa16F5228b518e475CaF29d340BbA403f";
-      const AnonymousFeedback = new web3Instance.eth.Contract(
+      const AnonymousFeedback = (new web3Instance.eth.Contract(
         contractJson.abi,
         contractAddress
-      ) as Contracts;
+      ) as unknown) as Contracts;
       AnonymousFeedback.setProvider(window.ethereum);
       setContracts(AnonymousFeedback);
     } catch (error) {
