@@ -33,7 +33,7 @@ interface Submission {
 
 export default function Component() {
   const { isInitialized, authState } = useOCAuth();
-  const isConnected = isInitialized && authState.isAuthenticated;
+  const isConnected = isInitialized && authState?.isAuthenticated;
   const [web3, setWeb3] = useState<Web3 | undefined>(undefined);
   const [contract, setContract] = useState<any>(undefined);
   const [ocidUsername, setOcidUsername] = useState<string | null>(null);

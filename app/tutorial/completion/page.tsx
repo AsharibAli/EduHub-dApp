@@ -110,7 +110,7 @@ export default function CompletionPage() {
           Claim Your Achievement
         </h2>
 
-        {!isInitialized || !authState.isAuthenticated ? (
+        {!isInitialized || !authState?.isAuthenticated ? (
           <div>
             <p className="text-gray-700 mb-4">
               Log in with your OCID to claim a verifiable credential for
@@ -153,7 +153,9 @@ export default function CompletionPage() {
                   <p className="text-sm mt-1">
                     Check your{" "}
                     <a
-                      href={`https://id.opencampus.xyz/public/credentials?username=${ocId}`}
+                      href={`${process.env.NODE_ENV === 'production' 
+                        ? 'https://id.opencampus.xyz' 
+                        : 'https://id.sandbox.opencampus.xyz'}/public/credentials?username=${ocId}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-teal-600 hover:underline font-medium"
