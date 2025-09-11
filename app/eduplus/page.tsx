@@ -193,15 +193,15 @@ export default function EduPlusPage() {
                   )}
                   <div>
                     <span className="font-medium text-gray-900">
-                      OCID Tutorial
+                      OC Ecosystem Guide
                     </span>
                     <p className="text-sm text-gray-500">
-                      Identity & credentials guide
+                      OCID, OCA & OCB fundamentals
                     </p>
                   </div>
                 </div>
                 {!hasTutorialCredential && (
-                  <Link href="/tutorial/ocid/introduction">
+                  <Link href="/oc-ecosystem-guide/oc-ecosystem/introduction">
                     <Button
                       size="sm"
                       className="bg-teal-600 hover:bg-teal-700 text-white"
@@ -243,7 +243,7 @@ export default function EduPlusPage() {
                         Complete Requirements
                       </p>
                       <p className="text-xs text-orange-700">
-                        Finish both Blockchain Workshop and OCID Tutorial
+                        Finish both Blockchain Workshop and OC Ecosystem Guide
                       </p>
                     </div>
                   </div>
