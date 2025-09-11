@@ -56,12 +56,11 @@ export async function POST(request: NextRequest) {
       isOCB,
     } = body;
 
-    // For OCB, we need either holderOcId or holderAddress
+    // For OCB, we only allow wallet addresses (EOA) - no OCID wallets
     // For OCA, we need holderOcId
     if (isOCB) {
-      if ((!holderOcId && !holderAddress) || !userName || !userEmail) {
+      if (!holderAddress || !userName || !userEmail) {
         console.error("Missing required parameters for OCB:", {
-          holderOcId,
           holderAddress,
           userName,
           userEmail,
@@ -69,7 +68,19 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           {
             error:
-              "Missing required parameters for OCB. Need either holderOcId or holderAddress, plus userName and userEmail",
+              "Missing required parameters for OCB. Need holderAddress (wallet), userName and userEmail.",
+          },
+          { status: 400 }
+        );
+      }
+
+      // Reject if trying to issue OCB to OCID (only wallet addresses allowed)
+      if (holderOcId && !holderAddress) {
+        console.error("OCB requires wallet address");
+        return NextResponse.json(
+          {
+            error:
+              "OCB requires a wallet address. Please connect your MetaMask wallet.",
           },
           { status: 400 }
         );
@@ -120,8 +131,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if this user already has this credential type (server-side check)
-    // Use holderOcId if available, otherwise use holderAddress for tracking
-    const trackingId = holderOcId || holderAddress;
+    // For OCB: use holderAddress (wallet) for tracking
+    // For OCA: use holderOcId for tracking
+    const trackingId = isOCB ? holderAddress : holderOcId;
     if (
       trackingId &&
       issuedCredentials[trackingId] &&
@@ -161,24 +173,22 @@ export async function POST(request: NextRequest) {
 
     // Format payload based on credential type and whether it's OCB or OCA
     if (isOCB) {
-      // OCB (Open Campus Badges) payloads
+      // OCB (Open Campus Badges) payloads - only for wallet addresses now
       if (credentialType === "eduplus") {
         credentialPayload = {
           validFrom: currentDate,
           awardedDate: currentDate,
           description:
-            "Earn this badge by completing the 'Intro to Blockchain' and 'Intro to OCID & OCA' guides on EduHub, then mint verifiable credentials on-chain to prove your learning.",
+            "Earn this badge by completing the 'Intro to Blockchain' and 'Intro to OCID & OCA' guides on EduHub, then mint verifiable credentials on-chain to prove your learning. Issued to EOA wallet for Yuzu Season 3 eligibility.",
           credentialSubject: {
             type: "Person",
             image: BADGE_ICON_URL,
-            profileUrl: holderOcId
-              ? `${PROFILE_URL_BASE}${holderOcId}`
-              : undefined,
+            // No profileUrl for wallet addresses - these are EOA not OCID profiles
             achievement: {
               name: "EduPlus",
               identifier: `eduhub:eduplus:${Date.now()}`,
               description:
-                "Completed both Blockchain Workshop and OCID & OCA Tutorial on EduHub",
+                "Completed both Blockchain Workshop and OCID & OCA Tutorial on EduHub - Issued to EOA for Yuzu eligibility",
               achievementType: "Badge",
             },
           },
@@ -188,17 +198,17 @@ export async function POST(request: NextRequest) {
         credentialPayload = {
           validFrom: currentDate,
           awardedDate: currentDate,
-          description: "EduHub Achievement Badge",
+          description:
+            "EduHub Achievement Badge - Issued to EOA for Yuzu Season 3 eligibility",
           credentialSubject: {
             type: "Person",
             image: BADGE_ICON_URL,
-            profileUrl: holderOcId
-              ? `${PROFILE_URL_BASE}${holderOcId}`
-              : undefined,
+            // No profileUrl for wallet addresses
             achievement: {
               name: "EduHub Badge",
               identifier: `eduhub:badge:${Date.now()}`,
-              description: "Achievement badge from EduHub",
+              description:
+                "Achievement badge from EduHub - Issued to EOA for Yuzu eligibility",
               achievementType: "Badge",
             },
           },
@@ -257,13 +267,9 @@ export async function POST(request: NextRequest) {
     };
 
     if (isOCB) {
-      // OCB requires collectionSymbol and either holderOcId or holderAddress
+      // OCB requires collectionSymbol and holderAddress (wallet only)
       payload.collectionSymbol = "ocbadge";
-      if (holderAddress) {
-        payload.holderAddress = holderAddress;
-      } else {
-        payload.holderOcId = holderOcId;
-      }
+      payload.holderAddress = holderAddress; // Only wallet addresses allowed for OCB
     } else {
       // OCA requires holderOcId
       payload.holderOcId = holderOcId;

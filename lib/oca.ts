@@ -3,6 +3,9 @@
  *
  * Note: In a production app, these API calls should be made from your backend
  * to protect your API key. We now use a Next.js API route to handle this securely.
+ *
+ * Important: OCB badges are now only issued to EOA wallets for Yuzu Season 3 eligibility.
+ * OCID wallet issuance has been removed per Open Campus support team guidance.
  */
 
 import {
@@ -210,100 +213,6 @@ export async function issueBootcampCredential(
       console.error("Error message:", error.message);
       console.error("Error stack:", error.stack);
     }
-    throw error;
-  }
-}
-
-/**
- * Issues an OCB (Open Campus Badge) to a user's OCID
- *
- * @param holderOcId The OCID of the badge recipient
- * @param userName The name of the recipient
- * @param userEmail The email of the recipient
- * @param badgeType The type of badge to issue (e.g., 'eduplus')
- * @returns Response from the OCB API
- */
-export async function issueBadgeToOCID(
-  holderOcId: string,
-  userName: string,
-  userEmail: string,
-  badgeType: string = "eduplus"
-) {
-  try {
-    console.log(
-      "Attempting to issue OCB to OCID:",
-      holderOcId,
-      "Badge type:",
-      badgeType
-    );
-
-    // Check if user already claimed this badge
-    const alreadyClaimed = hasClaimedCredential(holderOcId, badgeType);
-
-    if (alreadyClaimed) {
-      console.log("User already claimed this badge");
-      return {
-        success: false,
-        message: "You have already claimed this badge",
-        alreadyIssued: true,
-      };
-    }
-
-    // Call our local API route for OCB issuance
-    const response = await fetch("/api/issue-credential", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        credentialType: badgeType,
-        holderOcId,
-        userName,
-        userEmail,
-        alreadyClaimed,
-        isOCB: true,
-      }),
-    });
-
-    if (!response.ok) {
-      let errorMessage = "OCB API error";
-      try {
-        const errorData = await response.json();
-
-        // If this is a duplicate badge, inform the user nicely
-        if (errorData.alreadyIssued) {
-          console.log("Badge already issued (server reported)");
-          return {
-            success: false,
-            message: "You have already claimed this badge",
-            alreadyIssued: true,
-          };
-        }
-
-        errorMessage =
-          errorData.error ||
-          errorData.message ||
-          `HTTP error ${response.status}`;
-        console.error("Full error response:", errorData);
-      } catch (e) {
-        errorMessage = `HTTP error ${
-          response.status
-        }: ${await response.text()}`;
-      }
-      throw new Error(errorMessage);
-    }
-
-    const data = await response.json();
-    console.log("Badge issued successfully to OCID:", data);
-
-    // Store the badge claim in localStorage
-    if (data.success && data.claimRecord) {
-      storeClaimedCredential(data.claimRecord);
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Error issuing badge to OCID:", error);
     throw error;
   }
 }
