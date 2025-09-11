@@ -11,7 +11,7 @@ const OCA_ENVIRONMENT = process.env.OCA_ENVIRONMENT || "sandbox";
 const CREDENTIAL_IMAGE_URL =
   process.env.CREDENTIAL_IMAGE_URL || "https://eduhub.dev/eduhub.png";
 const BADGE_ICON_URL =
-  process.env.BADGE_ICON_URL || "https://i.ibb.co/CpD567YZ/badge-icon.png";
+  process.env.BADGE_ICON_URL || "https://app.eduhub.dev/eduplus.png";
 
 // Debug info for env variables
 console.log("======== ENV VARIABLES CHECK ========");
