@@ -270,7 +270,7 @@ function UserPageContent() {
                         >
                           OCID profile
                         </a>{" "}
-                        to view your all credentials.
+                        to view all your credentials.
                       </p>
                     </div>
                   </div>
