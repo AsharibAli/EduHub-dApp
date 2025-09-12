@@ -189,10 +189,10 @@ function UserPageContent() {
                     </div>
                   </div>
 
-                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                  <div className="bg-teal-50 p-4 rounded-lg border border-teal-200">
                     <div className="flex items-center mb-2">
-                      <Wallet className="h-4 w-4 text-blue-600 mr-2" />
-                      <span className="text-sm font-semibold text-blue-700">
+                      <Wallet className="h-4 w-4 text-teal-600 mr-2" />
+                      <span className="text-sm font-semibold text-teal-700">
                         Wallet Information
                       </span>
                     </div>
@@ -208,10 +208,10 @@ function UserPageContent() {
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <div className="bg-teal-50 p-4 rounded-lg border border-teal-200">
                     <div className="flex items-center mb-2">
-                      <Clock className="h-4 w-4 text-gray-600 mr-2" />
-                      <span className="text-sm font-semibold text-gray-700">
+                      <Clock className="h-4 w-4 text-teal-600 mr-2" />
+                      <span className="text-sm font-semibold text-teal-700">
                         Session Information
                       </span>
                     </div>
@@ -248,11 +248,11 @@ function UserPageContent() {
                   </div>
 
                   {/* View Your Credential Section */}
-                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <div className="bg-teal-50 p-4 rounded-lg border border-teal-200">
                     <div className="flex items-center mb-2">
-                      <Shield className="h-4 w-4 text-green-600 mr-2" />
-                      <span className="text-sm font-semibold text-green-700">
-                        View Your Credential
+                      <Shield className="h-4 w-4 text-teal-600 mr-2" />
+                      <span className="text-sm font-semibold text-teal-700">
+                        View Your Credentials
                       </span>
                     </div>
                     <div className="text-sm">
@@ -266,11 +266,11 @@ function UserPageContent() {
                           }/public/credentials?username=${userInfo.edu_username}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-green-600 hover:underline font-medium"
+                          className="text-teal-600 hover:underline font-medium"
                         >
                           OCID profile
                         </a>{" "}
-                        to view your new credential.
+                        to view your all credentials.
                       </p>
                     </div>
                   </div>
