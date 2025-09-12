@@ -165,17 +165,14 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             <div className="p-4 sm:p-6">
               <h2 className="text-xl sm:text-2xl font-bold text-teal-800 mb-3 sm:mb-2">
-                OC Ecosystem Guide
+                Guide
               </h2>
               <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200">
                 <h3 className="text-lg sm:text-xl font-semibold text-teal-700 mb-3">
-                  Understanding the Open Campus Ecosystem
+                  Intro to OC Ecosystem
                 </h3>
                 <p className="text-gray-700 mb-4 text-sm sm:text-base leading-relaxed">
-                  Discover the Open Campus Ecosystem through our comprehensive
-                  guide covering OCID, OCA, and OCB - the foundational
-                  components that revolutionize digital education credentials
-                  and decentralized identity management.
+                  A comprehensive guide to the Open Campus Ecosystem, covering the foundational components of OCID, OCA, and OCB.
                 </p>
 
                 {/* Show continue button only if progress exists AND user is authenticated AND hasn't claimed guide credential */}
