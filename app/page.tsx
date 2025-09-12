@@ -210,7 +210,7 @@ export default function Home() {
                 >
                   <Button className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto text-sm sm:text-base py-2 sm:py-2 px-4 sm:px-4 touch-manipulation">
                     {isConnected
-                      ? "Start OC Ecosystem Guide"
+                      ? "Start Guide"
                       : "Connect OCID & Start Guide"}
                   </Button>
                 </Link>
