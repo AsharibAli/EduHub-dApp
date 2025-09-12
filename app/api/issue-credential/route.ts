@@ -240,7 +240,7 @@ export async function POST(request: NextRequest) {
         credentialPayload = {
           validFrom: currentDate,
           awardedDate: currentDate,
-          description: "Completed the OC Ecosystem Integration Guide",
+          description: "Completed the Intro to OC Ecosystem guide",
           credentialSubject: {
             name: userName,
             type: "Person",
@@ -248,10 +248,10 @@ export async function POST(request: NextRequest) {
             image: CREDENTIAL_IMAGE_URL,
             profileUrl: `${PROFILE_URL_BASE}${holderOcId}`,
             achievement: {
-              name: "OCID & OCA Integration Master",
+              name: "Intro to OC Ecosystem",
               identifier: `edukit:${Date.now()}`,
               description:
-                "Successfully completed the comprehensive guide on integrating OCID Connect and Open Campus Achievements into dApps.",
+                "Successfully completed the comprehensive guide to the Open Campus Ecosystem by EduHub",
               achievementType: "Certificate",
             },
           },
