@@ -246,6 +246,34 @@ function UserPageContent() {
                       </div>
                     </div>
                   </div>
+
+                  {/* View Your Credential Section */}
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <div className="flex items-center mb-2">
+                      <Shield className="h-4 w-4 text-green-600 mr-2" />
+                      <span className="text-sm font-semibold text-green-700">
+                        View Your Credential
+                      </span>
+                    </div>
+                    <div className="text-sm">
+                      <p className="text-gray-700 mb-2">
+                        Check your{" "}
+                        <a
+                          href={`${
+                            process.env.NODE_ENV === "production"
+                              ? "https://id.opencampus.xyz"
+                              : "https://id.sandbox.opencampus.xyz"
+                          }/public/credentials?username=${userInfo.edu_username}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-600 hover:underline font-medium"
+                        >
+                          OCID profile
+                        </a>{" "}
+                        to view your new credential.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             )}
