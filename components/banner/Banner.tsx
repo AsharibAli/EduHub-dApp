@@ -17,7 +17,7 @@ import { useBanner } from "./BannerContext";
 const BANNER_CONFIG = {
   title: "➡️ Agent NFT - AI x Blockchain 🤖",
   description:
-    "Hold Agent NFT to get access to EduAgent (The First AI Agent for EduChain), Share a prize pool of 1-2 million Yuzu Points, and unlock future benefits.",
+    "Hold Agent NFT to get access to EduAgent (The First AI Agent for EduChain), Share a prize pool of 2 to 4+ million Yuzu Points, and unlock future benefits.",
   buttons: {
     primary: {
       text: "Purchase Here",
@@ -25,7 +25,7 @@ const BANNER_CONFIG = {
     },
     secondary: {
       text: "More Info",
-      href: "https://x.com/eduhub__/status/1910693515509850434",
+      href: "https://www.notion.so/Earn-Yuzu-Points-with-EduHub-21f6e76e9e8580a99045fe6395aebd57?source=copy_link",
     },
   },
 };
