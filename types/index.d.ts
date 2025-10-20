@@ -1,4 +1,1 @@
-export interface Contracts {
-  methods: any;
-  setProvider: any;
-}
+export type Contracts = any;

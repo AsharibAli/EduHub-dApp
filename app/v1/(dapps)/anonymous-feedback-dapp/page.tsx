@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import LoginButton from "@/components/LoginButton";
 import { useOCAuth } from "@opencampus/ocid-connect-js";
 import { jwtDecode } from "jwt-decode";
-import { Contracts } from "@/types";
+import type { Contracts } from "@/types";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -27,7 +27,7 @@ interface DecodedToken {
 
 const FeedbackApp: React.FC = () => {
   const { isInitialized, authState } = useOCAuth();
-  const isConnected = isInitialized && authState.isAuthenticated;
+  const isConnected = isInitialized && authState?.isAuthenticated;
   const [feedback, setFeedback] = useState<string>("");
   const [submittedFeedback, setSubmittedFeedback] = useState<string[]>([]);
   const [web3, setWeb3] = useState<Web3 | undefined>(undefined);
@@ -62,10 +62,10 @@ const FeedbackApp: React.FC = () => {
       setIsMetaMaskConnected(true);
 
       const contractAddress = "0x1f99874fa16F5228b518e475CaF29d340BbA403f";
-      const AnonymousFeedback = new web3Instance.eth.Contract(
+      const AnonymousFeedback = (new web3Instance.eth.Contract(
         contractJson.abi,
         contractAddress
-      ) as Contracts;
+      ) as unknown) as Contracts;
       AnonymousFeedback.setProvider(window.ethereum);
       setContracts(AnonymousFeedback);
     } catch (error) {

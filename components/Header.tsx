@@ -12,6 +12,9 @@ const Header = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const { ocAuth, authState, isInitialized } = useOCAuth();
 
+  // Add safety check for authState
+  const isAuthenticated = authState?.isAuthenticated || false;
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -84,7 +87,7 @@ const Header = () => {
                   aria-orientation="vertical"
                   aria-labelledby="user-menu"
                 >
-                  {isInitialized && authState.isAuthenticated ? (
+                  {isInitialized && isAuthenticated ? (
                     <>
                       <Link
                         href="/v1"
@@ -101,6 +104,14 @@ const Header = () => {
                         onClick={() => setIsMenuOpen(false)}
                       >
                         User Details
+                      </Link>
+                      <Link
+                        href="/eduplus"
+                        className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 touch-manipulation"
+                        role="menuitem"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        EduPlus Badge
                       </Link>
                       <button
                         onClick={handleLogout}

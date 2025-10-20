@@ -57,7 +57,7 @@ export default function CompletionPage() {
       }
 
       console.log(
-        "Starting credential issuance for tutorial completion:",
+        "Starting credential issuance for OC Ecosystem guide completion:",
         ocId
       );
 
@@ -92,7 +92,7 @@ export default function CompletionPage() {
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold text-teal-800 mb-6">
-        Congratulations on Completing the Tutorial!
+        Congratulations! You've Completed the OC Ecosystem Guide!
       </h1>
 
       <div className="bg-white p-6 rounded-lg shadow-md mb-8">
@@ -100,21 +100,53 @@ export default function CompletionPage() {
           What You've Learned
         </h2>
         <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">
-          <li>How to integrate OCID Connect into a web application</li>
-          <li>How to implement user authentication with OCID</li>
-          <li>How to issue verifiable credentials through the OCA API</li>
-          <li>Best practices for Web3 dApp development</li>
+          <li>
+            The fundamentals of the Open Campus Ecosystem and its three main
+            components
+          </li>
+          <li>How OCID works as your secure digital identity for education</li>
+          <li>
+            What Open Campus Achievements (OCA) are and how they benefit
+            learners
+          </li>
+          <li>
+            Understanding Open Campus Badges (OCB) and their role in community
+            engagement
+          </li>
+          <li>
+            How these technologies work together to revolutionize digital
+            education
+          </li>
         </ul>
 
+        <div className="bg-gradient-to-r from-teal-50 to-blue-50 border border-teal-200 rounded-lg p-6 my-6">
+          <h3 className="text-lg font-semibold text-teal-700 mb-2">
+            Your Learning Journey Starts Here!
+          </h3>
+          <p className="text-gray-700 mb-3">
+            Now that you understand the Open Campus Ecosystem, you're ready to:
+          </p>
+          <ul className="list-disc list-inside text-gray-700 space-y-1 text-sm">
+            <li>
+              Create your own OCID and start building your digital identity
+            </li>
+            <li>Participate in educational programs that award OCAs</li>
+            <li>Collect OCBs by engaging with the community</li>
+            <li>
+              Explore the growing ecosystem of educational platforms and tools
+            </li>
+          </ul>
+        </div>
+
         <h2 className="text-2xl font-semibold text-teal-700 mt-8 mb-4">
-          Claim Your Achievement
+          Claim Your Guide Completion Achievement
         </h2>
 
-        {!isInitialized || !authState.isAuthenticated ? (
+        {!isInitialized || !authState?.isAuthenticated ? (
           <div>
             <p className="text-gray-700 mb-4">
-              Log in with your OCID to claim a verifiable credential for
-              completing this tutorial.
+              Log in with your OCID to claim a special achievement credential
+              for completing the OC Ecosystem guide.
             </p>
             <LoginButton />
           </div>
@@ -122,8 +154,8 @@ export default function CompletionPage() {
           <div>
             <p className="text-gray-700 mb-4">
               {claimStatus !== "success"
-                ? "Claim your verifiable credential for completing the tutorial."
-                : "You've claimed your credential for completing this tutorial."}
+                ? "Claim your special OC Ecosystem guide completion achievement!"
+                : "You've successfully claimed your guide completion achievement!"}
             </p>
 
             {claimStatus === "idle" && (
@@ -153,7 +185,11 @@ export default function CompletionPage() {
                   <p className="text-sm mt-1">
                     Check your{" "}
                     <a
-                      href={`https://id.opencampus.xyz/public/credentials?username=${ocId}`}
+                      href={`${
+                        process.env.NODE_ENV === "production"
+                          ? "https://id.opencampus.xyz"
+                          : "https://id.sandbox.opencampus.xyz"
+                      }/public/credentials?username=${ocId}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-teal-600 hover:underline font-medium"
@@ -187,8 +223,8 @@ export default function CompletionPage() {
       </div>
 
       <div className="flex justify-between items-center mt-8">
-        <Link href="/tutorial/smart-contract">
-          <Button variant="outline">← Back to Tutorial</Button>
+        <Link href="/oc-ecosystem-guide/ocb">
+          <Button variant="outline">← Back to OCB Guide</Button>
         </Link>
 
         <Link href="/">

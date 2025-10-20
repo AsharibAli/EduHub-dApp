@@ -49,10 +49,10 @@ function UserPageContent() {
 
   useEffect(() => {
     // If user is authenticated and there's a redirect path, go there
-    if (isInitialized && authState.isAuthenticated && redirectTo) {
+    if (isInitialized && authState?.isAuthenticated && redirectTo) {
       router.push(redirectTo);
     }
-  }, [isInitialized, authState.isAuthenticated, redirectTo, router]);
+  }, [isInitialized, authState?.isAuthenticated, redirectTo, router]);
 
   // Store redirect destination for use with the LoginButton
   useEffect(() => {
@@ -151,7 +151,7 @@ function UserPageContent() {
                   </CardTitle>
                   <p className="text-sm sm:text-base text-gray-600 mb-6 leading-relaxed">
                     {redirectTo
-                      ? "Please connect your OCID to start the tutorial."
+                      ? "Please connect your OCID to start the guide."
                       : "Please link with Open Campus to view your details."}
                   </p>
                   <LoginButton className="w-full sm:w-auto" />
@@ -189,10 +189,10 @@ function UserPageContent() {
                     </div>
                   </div>
 
-                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                  <div className="bg-teal-50 p-4 rounded-lg border border-teal-200">
                     <div className="flex items-center mb-2">
-                      <Wallet className="h-4 w-4 text-blue-600 mr-2" />
-                      <span className="text-sm font-semibold text-blue-700">
+                      <Wallet className="h-4 w-4 text-teal-600 mr-2" />
+                      <span className="text-sm font-semibold text-teal-700">
                         Wallet Information
                       </span>
                     </div>
@@ -208,10 +208,10 @@ function UserPageContent() {
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <div className="bg-teal-50 p-4 rounded-lg border border-teal-200">
                     <div className="flex items-center mb-2">
-                      <Clock className="h-4 w-4 text-gray-600 mr-2" />
-                      <span className="text-sm font-semibold text-gray-700">
+                      <Clock className="h-4 w-4 text-teal-600 mr-2" />
+                      <span className="text-sm font-semibold text-teal-700">
                         Session Information
                       </span>
                     </div>
@@ -246,6 +246,34 @@ function UserPageContent() {
                       </div>
                     </div>
                   </div>
+
+                  {/* View Your Credential Section */}
+                  <div className="bg-teal-50 p-4 rounded-lg border border-teal-200">
+                    <div className="flex items-center mb-2">
+                      <Shield className="h-4 w-4 text-teal-600 mr-2" />
+                      <span className="text-sm font-semibold text-teal-700">
+                        View Your Credentials
+                      </span>
+                    </div>
+                    <div className="text-sm">
+                      <p className="text-gray-700 mb-2">
+                        Check your{" "}
+                        <a
+                          href={`${
+                            process.env.NODE_ENV === "production"
+                              ? "https://id.opencampus.xyz"
+                              : "https://id.sandbox.opencampus.xyz"
+                          }/public/credentials?username=${userInfo.edu_username}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-teal-600 hover:underline font-medium"
+                        >
+                          OCID profile
+                        </a>{" "}
+                        to view all your credentials.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             )}
@@ -259,7 +287,9 @@ function UserPageContent() {
                   >
                     <ArrowRight className="h-4 w-4 mr-2" />
                     Continue to{" "}
-                    {redirectTo.includes("tutorial") ? "Tutorial" : "Workshop"}
+                    {redirectTo.includes("oc-ecosystem-guide")
+                      ? "OC Ecosystem Guide"
+                      : "Workshop"}
                   </Button>
                 )}
 

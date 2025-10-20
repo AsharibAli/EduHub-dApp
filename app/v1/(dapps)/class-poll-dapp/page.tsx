@@ -32,7 +32,7 @@ interface Poll {
 
 const ClassPoll: React.FC = () => {
   const { isInitialized, authState } = useOCAuth();
-  const isConnected = isInitialized && authState.isAuthenticated;
+  const isConnected = isInitialized && authState?.isAuthenticated;
   const [web3, setWeb3] = useState<Web3 | undefined>(undefined);
   const [contracts, setContracts] = useState<Contracts | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import Web3 from "web3";
 import { toast } from "@/components/ui/use-toast";
@@ -8,14 +8,34 @@ interface MetaMaskConnectProps {
   onConnect?: (address: string) => void;
   onDisconnect?: () => void;
   className?: string;
+  storageKey?: string; // Custom storage key to avoid conflicts
 }
 
 const EDU_CHAIN_ID = "0xa3c3";
+
+// Utility function to get MetaMask provider specifically
+const getMetaMaskProvider = () => {
+  if (typeof window.ethereum === "undefined") {
+    return null;
+  }
+
+  // If there are multiple providers, find MetaMask specifically
+  if (window.ethereum.providers && Array.isArray(window.ethereum.providers)) {
+    return (
+      window.ethereum.providers.find((provider) => provider.isMetaMask) ||
+      window.ethereum
+    );
+  }
+
+  // If MetaMask is the main provider or only provider
+  return window.ethereum;
+};
 
 export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
   onConnect,
   onDisconnect,
   className = "bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg touch-manipulation",
+  storageKey = "walletAddress", // Default storage key for backward compatibility
 }) => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [accountAddress, setAccountAddress] = useState<string | undefined>(
@@ -24,39 +44,38 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
 
   useEffect(() => {
     // Check localStorage for existing connection
-    const storedAddress = localStorage.getItem("walletAddress");
+    const storedAddress = localStorage.getItem(storageKey);
     if (storedAddress) {
       checkConnection(storedAddress);
     }
 
     // Add event listeners for account and network changes
-    if (window.ethereum) {
-      window.ethereum.on("accountsChanged", handleAccountsChanged);
-      window.ethereum.on("chainChanged", handleChainChanged);
-    }
+    const ethereum = getMetaMaskProvider();
+    if (ethereum) {
+      ethereum.on("accountsChanged", handleAccountsChanged);
+      ethereum.on("chainChanged", handleChainChanged);
 
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener(
-          "accountsChanged",
-          handleAccountsChanged
-        );
-        window.ethereum.removeListener("chainChanged", handleChainChanged);
-      }
-    };
-  }, []);
+      return () => {
+        ethereum.removeListener("accountsChanged", handleAccountsChanged);
+        ethereum.removeListener("chainChanged", handleChainChanged);
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storageKey]); // Only storageKey as dependency to avoid complex callback issues
 
   const checkConnection = async (storedAddress: string) => {
-    if (typeof window.ethereum !== "undefined") {
+    const ethereum = getMetaMaskProvider();
+    if (ethereum) {
       try {
-        const accounts = await window.ethereum.request({
+        const accounts = await ethereum.request({
           method: "eth_accounts",
         });
+
         if (
           accounts[0] &&
           accounts[0].toLowerCase() === storedAddress.toLowerCase()
         ) {
-          const chainId = await window.ethereum.request({
+          const chainId = await ethereum.request({
             method: "eth_chainId",
           });
           if (chainId === EDU_CHAIN_ID) {
@@ -77,16 +96,17 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
   };
 
   const switchToOpenCampusNetwork = async () => {
-    if (typeof window.ethereum !== "undefined") {
+    const ethereum = getMetaMaskProvider();
+    if (ethereum) {
       try {
-        await window.ethereum.request({
+        await ethereum.request({
           method: "wallet_switchEthereumChain",
           params: [{ chainId: EDU_CHAIN_ID }],
         });
       } catch (switchError: any) {
         if (switchError.code === 4902) {
           try {
-            await window.ethereum.request({
+            await ethereum.request({
               method: "wallet_addEthereumChain",
               params: [
                 {
@@ -131,7 +151,7 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
     } else if (accounts[0] !== accountAddress) {
       setAccountAddress(accounts[0]);
       setIsConnected(true);
-      localStorage.setItem("walletAddress", accounts[0]);
+      localStorage.setItem(storageKey, accounts[0]);
       onConnect?.(accounts[0]);
       toast({
         title: "Account Changed",
@@ -157,12 +177,14 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
   const handleDisconnect = () => {
     setIsConnected(false);
     setAccountAddress(undefined);
-    localStorage.removeItem("walletAddress");
+    localStorage.removeItem(storageKey);
     onDisconnect?.();
   };
 
   const connectWallet = async () => {
-    if (typeof window.ethereum === "undefined") {
+    const ethereum = getMetaMaskProvider();
+
+    if (!ethereum) {
       toast({
         variant: "destructive",
         title: "MetaMask Required",
@@ -172,40 +194,57 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
     }
 
     try {
-      await switchToOpenCampusNetwork();
-      const chainId = await window.ethereum.request({ method: "eth_chainId" });
-
-      if (chainId !== EDU_CHAIN_ID) {
-        toast({
-          variant: "destructive",
-          title: "Network Error",
-          description: "Please connect to Open Campus Codex network",
-        });
-        return;
-      }
-
-      const accounts = await window.ethereum.request({
+      const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
-      setAccountAddress(accounts[0]);
+
+      if (accounts.length === 0) {
+        throw new Error("No accounts returned from MetaMask");
+      }
+
+      const account = accounts[0];
+
+      setAccountAddress(account);
       setIsConnected(true);
-      localStorage.setItem("walletAddress", accounts[0]);
-      onConnect?.(accounts[0]);
+      localStorage.setItem(storageKey, account);
+      onConnect?.(account);
+
+      console.log("Wallet connected successfully:", account);
 
       toast({
         title: "Wallet Connected",
-        description: `Connected to ${accounts[0].slice(
-          0,
-          6
-        )}...${accounts[0].slice(-4)}`,
+        description: `Connected to ${account.slice(0, 6)}...${account.slice(
+          -4
+        )}`,
       });
     } catch (error: any) {
-      console.error("Failed to connect wallet:", error);
-      toast({
-        variant: "destructive",
-        title: "Connection Error",
-        description: error.message || "Failed to connect wallet",
-      });
+      console.error("=== MetaMask Connection Error ===");
+      console.error("Error object:", error);
+      console.error("Error message:", error.message);
+      console.error("Error code:", error.code);
+
+      // Handle specific MetaMask errors
+      if (error.code === 4001) {
+        toast({
+          variant: "destructive",
+          title: "Connection Rejected",
+          description: "You rejected the connection request. Please try again.",
+        });
+      } else if (error.code === -32002) {
+        toast({
+          variant: "destructive",
+          title: "Request Pending",
+          description:
+            "MetaMask is already processing a request. Please check MetaMask.",
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Connection Error",
+          description:
+            error.message || "Failed to connect wallet. Please try again.",
+        });
+      }
     }
   };
 
@@ -238,7 +277,10 @@ export const MetaMaskConnect: React.FC<MetaMaskConnectProps> = ({
     <div className="w-full max-w-md mx-auto">
       <Button
         className={`w-full ${className}`}
-        onClick={connectWallet}
+        onClick={() => {
+          console.log("MetaMask button clicked!");
+          connectWallet();
+        }}
         variant="default"
       >
         Connect with MetaMask
